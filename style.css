@@ -1,0 +1,23 @@
+#nev{
+    font-size: 50px;
+    text-align: center;
+    
+}
+#jatekter{
+    width: 750px;
+    height: 750px;
+    border: 1px solid black;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+#kezdes{
+    text-align: center;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    font-size: 30px;
+    margin-top: 20px;
+    border-radius: 15px;
+}
