@@ -1,5 +1,20 @@
 
 
+var darabok = [
+    {tipus: "ut",csatlakozasok: {fent: false, lent: false, bal: false, jobb: false}},
+    {tipus: "ut",csatlakozasok: {fent: false, lent: false, bal: false, jobb: false}},
+    {tipus: "ut",csatlakozasok: {fent: false, lent: false, bal: false, jobb: false}},
+    {tipus: "ut",csatlakozasok: {fent: false, lent: false, bal: false, jobb: false}},
+    {tipus: "ut",csatlakozasok: {fent: false, lent: false, bal: false, jobb: false}},
+    {tipus: "ut",csatlakozasok: {fent: false, lent: false, bal: false, jobb: false}},
+    {tipus: "ut",csatlakozasok: {fent: false, lent: false, bal: false, jobb: false}},
+    {tipus: "ut",csatlakozasok: {fent: false, lent: false, bal: false, jobb: false}},
+    {tipus: "ut",csatlakozasok: {fent: false, lent: false, bal: false, jobb: false}},
+    {tipus: "ut",csatlakozasok: {fent: false, lent: false, bal: false, jobb: false}},
+    {tipus: "ut",csatlakozasok: {fent: false, lent: false, bal: false, jobb: false}}
+]
+
+
 function kezdes(){
 var jatekter = document.getElementById("jatekter");
 document.getElementById("kezdes").remove();
