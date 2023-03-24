@@ -5,8 +5,7 @@
 }
 #jatekter{
     width: 750px;
-    height: 750px;
-    border: 1px solid black;
+    height: 500px;
     display: flex;
     margin-left: auto;
     margin-right: auto;
@@ -20,4 +19,14 @@
     font-size: 30px;
     margin-top: 20px;
     border-radius: 15px;
+}
+
+
+#darabokhelye{
+    position: fixed;
+    right: 10%;
+    top: 25%;
+}
+#darabokhelye img{
+    position: fixed;
 }
