@@ -17,7 +17,7 @@ var helyek = new Array(5)
 for(i = 0; i < 5;i++){
     helyek[i] = new Array(8);
     for(f = 0; f < 8; f++){
-        helyek[i][f] = "<img style='border: 1px solid black;' darab='semmi' src='./kepek/semmi.png'>";
+        helyek[i][f] = `<img style='border: 1px solid black;' darab='semmi' src='./kepek/semmi.png'>`;
     }
 }
 
@@ -25,19 +25,19 @@ function kezdes(){
     var jatekter = "";
     var index = 0;
     document.body.innerHTML += `<div id="darabokhelye"><h2>Jelenlegi darab</h2></div>`;
-    jatekter += "<table id='jatekter'>";
+    jatekter += `<table id='jatekter'>`;
     for(i = 0; i < 5; i++){
         jatekter += "<tr>"
         for(f = 0; f < 8; f++){
             index++;
             var random = Math.round(Math.random()*9);
-            document.getElementById("darabokhelye").innerHTML +=  "<img style='z-index: "+ index +";' forgatas='' id="+ index +" kep="+ random +" fent="+ darabok[random].csatlakozasok.fent +" lent="+ darabok[random].csatlakozasok.lent +" jobb="+ darabok[random].csatlakozasok.jobb +" bal="+ darabok[random].csatlakozasok.bal +" onclick='forgatas(this)' src="+darabok[random].kep+">";
-            jatekter += "<td id="+ i +"-"+ f +" class='hely' onclick='elhelyezes(this)'>"+helyek[i][f]+"</td>"
+            document.getElementById("darabokhelye").innerHTML +=  `<img style='z-index:${index};' id=${index} kep=${random} fent=${darabok[random].csatlakozasok.fent} lent=${darabok[random].csatlakozasok.lent} jobb=${darabok[random].csatlakozasok.jobb} bal=${darabok[random].csatlakozasok.bal} onclick='forgatas(this)' src="${darabok[random].kep}">`;
+            jatekter += `<td id=${i}-${f} class='hely' onclick='elhelyezes(this)'>${helyek[i][f]}</td>`
         }
         jatekter += "</tr>";
     }
     jatekter += "</table>";
-    document.getElementById("pont").innerHTML += 'Pont: <span id="pontszam">0</span>';
+    document.body.innerHTML += `<h1 id="pont">Pont: <span id="pontszam">0</span></h1>`
     document.body.innerHTML += jatekter;
     document.getElementById("kezdes").remove();
 }
@@ -241,15 +241,15 @@ function forgatas(darab){
 
 function frissites(){
     var jatekter = "";
-    jatekter += "<table>";
+    jatekter += `<table>`;
     for(i = 0; i < 5; i++){
         jatekter += "<tr>"
         for(f = 0; f < 8; f++){
-            jatekter += "<td id="+ i +"-"+ f +" class='hely' onclick='elhelyezes(this)'>"+helyek[i][f]+"</td>"
+            jatekter += `<td id=${i}-${f} class='hely' onclick='elhelyezes(this)'>${helyek[i][f]}</td>`
         }
-        jatekter += "</tr>";
+        jatekter += `</tr>`;
     }
-    jatekter += "</table>";
+    jatekter += `</table>`;
     document.getElementById("jatekter").innerHTML = jatekter;
 }
 
@@ -303,7 +303,7 @@ function elhelyezes(hely){
             var melyikkep = document.getElementById(k).getAttribute('kep');
             var irany = document.getElementById(k).style.rotate;
         if(leRakhatoE(melyikkep,parseInt(i),parseInt(f),document.getElementById(k).getAttribute("fent"),document.getElementById(k).getAttribute("lent"),document.getElementById(k).getAttribute("bal"),document.getElementById(k).getAttribute("jobb"))){
-            helyek[i][f] = "<img style='rotate: "+irany+";' src="+ darabok[melyikkep].kep +" id="+i +"-"+ f + "-kep" +" darab="+ melyikkep +" fent="+ document.getElementById(k).getAttribute("fent") +" lent="+ document.getElementById(k).getAttribute("lent") +" bal="+ document.getElementById(k).getAttribute("bal") +" jobb="+ document.getElementById(k).getAttribute("jobb") +">";
+            helyek[i][f] = `<img style="rotate: ${irany}" src="${darabok[melyikkep].kep}" id=${i}-${f}-kep darab=${melyikkep} fent=${document.getElementById(k).getAttribute("fent")} lent=${document.getElementById(k).getAttribute("lent")} bal=${document.getElementById(k).getAttribute("bal")} jobb=${document.getElementById(k).getAttribute("jobb")}>`;
             document.getElementById(k).remove();
             pontok += 5;
             document.getElementById("pontszam").innerText = pontok;
