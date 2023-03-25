@@ -1,32 +1,51 @@
-#nev{
-    font-size: 50px;
+#logo{
+    height: 150px;
     text-align: center;
-    
+    position: fixed;
+    top: 35%;
 }
-#jatekter{
-    width: 750px;
-    height: 500px;
-    display: flex;
+
+
+#pont{
+    text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
+
+#jatekter{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#jatekter td img{
+    width: 100px;
+}
+
 #kezdes{
     text-align: center;
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
     padding: 15px;
     font-size: 30px;
+    position: fixed;
+    top: 40%;
+    left: 45%;
     margin-top: 20px;
     border-radius: 15px;
 }
 
-
 #darabokhelye{
     position: fixed;
-    right: 10%;
-    top: 25%;
+    text-align: center;
+    right: 6%;
+    top: 30%;
 }
+
+#darabokhelye h2{
+    margin-left: 100px;
+    right: 5%;
+}
+
 #darabokhelye img{
     position: fixed;
+    width: 100px;
 }
+
