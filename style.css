@@ -19,6 +19,7 @@
 
 #jatekter td img{
     width: 100px;
+    height: 100px;
 }
 
 #kezdes{
@@ -47,5 +48,6 @@
 #darabokhelye img{
     position: fixed;
     width: 100px;
+    height: 100px;
 }
 
