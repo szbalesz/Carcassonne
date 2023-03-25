@@ -1,6 +1,13 @@
 
-var szelesseg = 8;
-var hosszusag = 5;
+var szelesseg = 10;
+var hosszusag = 8;
+var lerakott = 0;
+var pontok = 0;
+var legtobbpont = 0;
+
+if(localStorage.getItem("legtobbpont") > legtobbpont){
+    legtobbpont = localStorage.getItem("legtobbpont");
+}
 
 var darabok = [
     {tipus: "ut1",csatlakozasok: {fent: "mezo", lent: "ut", bal: "ut", jobb: "mezo"},kep: "./kepek/út1.jpg"},
@@ -15,12 +22,45 @@ var darabok = [
     {tipus: "város4",csatlakozasok: {fent: "mezo", lent: "mezo", bal: "varos", jobb: "varos"},kep: "./kepek/város4.jpg"}
 ]
 
+var generaltdarabok = [];
+
 var helyek = new Array(hosszusag)
 for(i = 0; i < hosszusag;i++){
     helyek[i] = new Array(szelesseg);
-    for(f = 0; f < szelesseg; f++){
-        helyek[i][f] = `<img style='border: 1px solid black;' darab='semmi' id=${i}-${f}-kep src='./kepek/semmi.png'>`;
+}
+
+function reset(){
+    document.body.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/it/3/38/Carcassonne_Logo.png" id="logo"><script src="jatek.js"></script>`
+    if(pontok > legtobbpont){
+        legtobbpont = pontok;
+        localStorage.setItem("legtobbpont",legtobbpont);
+    };
+    kezdes();
+    pontok = 0;
+    lerakott = 0;
+}
+
+function generalas(){
+    for(i = 0; i < szelesseg*hosszusag;i++){
+        if(i < 10){
+            generaltdarabok[i] = i;
+        }
+        else{
+            generaltdarabok[i] = Math.round(Math.random()*9);
+        }
     }
+}
+
+function urestabla(){
+    for(i = 0; i < hosszusag;i++){
+        for(f = 0; f < szelesseg; f++){
+            helyek[i][f] = `<img style='border: 1px solid black;' darab='semmi' id=${i}-${f}-kep src='./kepek/semmi.png'>`;
+        }
+    }
+}
+
+function gombtorles(){
+    document.getElementById("kezdes").remove();
 }
 
 function kezdes(){
@@ -28,20 +68,24 @@ function kezdes(){
     var index = 0;
     document.body.innerHTML += `<div id="darabokhelye"><h2>Jelenlegi darab</h2></div>`;
     jatekter += `<table id='jatekter'>`;
+    generalas();
+    urestabla();
     for(i = 0; i < hosszusag; i++){
         jatekter += "<tr>"
         for(f = 0; f < szelesseg; f++){
-            index++;
-            var random = Math.round(Math.random()*9);
-            document.getElementById("darabokhelye").innerHTML +=  `<img style='z-index:${index};' id=${index} kep=${random} fent=${darabok[random].csatlakozasok.fent} lent=${darabok[random].csatlakozasok.lent} jobb=${darabok[random].csatlakozasok.jobb} bal=${darabok[random].csatlakozasok.bal} onclick='forgatas(this)' src="${darabok[random].kep}">`;
+            document.getElementById("darabokhelye").innerHTML +=  `<img style='z-index:${index};' id=${index} kep=${generaltdarabok[index]} fent=${darabok[generaltdarabok[index]].csatlakozasok.fent} lent=${darabok[generaltdarabok[index]].csatlakozasok.lent} jobb=${darabok[generaltdarabok[index]].csatlakozasok.jobb} bal=${darabok[generaltdarabok[index]].csatlakozasok.bal} onclick='forgatas(this)' src="${darabok[generaltdarabok[index]].kep}">`;
             jatekter += `<td id=${i}-${f} class='hely' onclick='elhelyezes(this)'>${helyek[i][f]}</td>`
+            index++;
         }
         jatekter += "</tr>";
     }
     jatekter += "</table>";
-    document.body.innerHTML += `<h1 id="pont">Pont: <span id="pontszam">0</span></h1>`
+    document.body.innerHTML += `<button id="reset" onclick="reset()">Újrakezdés</button>`
+    if(legtobbpont > 0){
+       document.body.innerHTML += `<h2 id="legtobbpont">Legtöbb pont: ${legtobbpont}</h2>` 
+    }
+    document.body.innerHTML += `<h2 id="pont">Pont: <span id="pontszam">0</span></h2>`
     document.body.innerHTML += jatekter;
-    document.getElementById("kezdes").remove();
 }
 
 
@@ -255,13 +299,11 @@ function frissites(){
     document.getElementById("jatekter").innerHTML = jatekter;
 }
 
-var lerakott = 0;
-
 function leRakhatoE(melyikkep,i,f,jelenlegifel,jelenlegile,jelenlegibal,jelenlegijobb){
     var feletti = helyek[Math.max(i-1,0)][f];
-    var alatti = helyek[Math.min(i+1,4)][f];
+    var alatti = helyek[Math.min(i+1,hosszusag-1)][f];
     var baloldali = helyek[i][Math.max(f-1,0)];
-    var jobboldali = helyek[i][Math.min(f+1,7)];
+    var jobboldali = helyek[i][Math.min(f+1,szelesseg-1)];
     //kolostor, és mező
     if((melyikkep == 4 || melyikkep == 5) & ((feletti.includes('lent=mezo') || feletti.includes('semmi')) & (alatti.includes('fent=mezo') || alatti.includes('semmi')) & (baloldali.includes('jobb=mezo') || baloldali.includes('semmi')) & (jobboldali.includes('bal=mezo') || jobboldali.includes('semmi'))) ){
         if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
@@ -310,7 +352,7 @@ function leRakhatoE(melyikkep,i,f,jelenlegifel,jelenlegile,jelenlegibal,jelenleg
     }
 }
 
-var pontok = 0;
+
 function elhelyezes(hely){
     var i = (hely.id).split('-')[0];
     var f = (hely.id).split('-')[1];
@@ -325,7 +367,6 @@ function elhelyezes(hely){
             pontok += 5;
             document.getElementById("pontszam").innerText = pontok;
             lerakott++;
-            console.log(lerakott)
         }
         break;
         }
@@ -333,5 +374,3 @@ function elhelyezes(hely){
     frissites();
     }
 }
-
-document.getElementById("kezdes").addEventListener('click',kezdes);
