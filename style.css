@@ -20,6 +20,7 @@
     top: 10%;
 }
 
+
 #reset{
     text-align: center;
     position: fixed;
@@ -38,7 +39,9 @@
 #jatekter td img{
     width: 75px;
     height: 75px;
+    margin: 0px;
 }
+
 
 #kezdes{
     text-align: center;
@@ -54,17 +57,23 @@
 #darabokhelye{
     position: fixed;
     text-align: center;
-    right: 6%;
+    right: 5%;
     top: 30%;
+    background-color: black;
+    border-radius: 5%;
+    color: white;
+    width: 200px;
+    height: 200px;
+    box-shadow: 0px 0px 20px 20px rgb(0,0,0,0.4);
 }
 
 #darabokhelye h2{
-    margin-left: 100px;
-    right: 5%;
+    right: 7%;
 }
 
 #darabokhelye img{
-    position: fixed;
+    position: absolute;
+    right: 26%;
     width: 100px;
     height: 100px;
 }
