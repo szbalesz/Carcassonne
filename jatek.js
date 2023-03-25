@@ -1,4 +1,6 @@
 
+var szelesseg = 8;
+var hosszusag = 5;
 
 var darabok = [
     {tipus: "ut1",csatlakozasok: {fent: "mezo", lent: "ut", bal: "ut", jobb: "mezo"},kep: "./kepek/út1.jpg"},
@@ -13,11 +15,11 @@ var darabok = [
     {tipus: "város4",csatlakozasok: {fent: "mezo", lent: "mezo", bal: "varos", jobb: "varos"},kep: "./kepek/város4.jpg"}
 ]
 
-var helyek = new Array(5)
-for(i = 0; i < 5;i++){
-    helyek[i] = new Array(8);
-    for(f = 0; f < 8; f++){
-        helyek[i][f] = `<img style='border: 1px solid black;' darab='semmi' src='./kepek/semmi.png'>`;
+var helyek = new Array(hosszusag)
+for(i = 0; i < hosszusag;i++){
+    helyek[i] = new Array(szelesseg);
+    for(f = 0; f < szelesseg; f++){
+        helyek[i][f] = `<img style='border: 1px solid black;' darab='semmi' id=${i}-${f}-kep src='./kepek/semmi.png'>`;
     }
 }
 
@@ -26,9 +28,9 @@ function kezdes(){
     var index = 0;
     document.body.innerHTML += `<div id="darabokhelye"><h2>Jelenlegi darab</h2></div>`;
     jatekter += `<table id='jatekter'>`;
-    for(i = 0; i < 5; i++){
+    for(i = 0; i < hosszusag; i++){
         jatekter += "<tr>"
-        for(f = 0; f < 8; f++){
+        for(f = 0; f < szelesseg; f++){
             index++;
             var random = Math.round(Math.random()*9);
             document.getElementById("darabokhelye").innerHTML +=  `<img style='z-index:${index};' id=${index} kep=${random} fent=${darabok[random].csatlakozasok.fent} lent=${darabok[random].csatlakozasok.lent} jobb=${darabok[random].csatlakozasok.jobb} bal=${darabok[random].csatlakozasok.bal} onclick='forgatas(this)' src="${darabok[random].kep}">`;
@@ -242,9 +244,9 @@ function forgatas(darab){
 function frissites(){
     var jatekter = "";
     jatekter += `<table>`;
-    for(i = 0; i < 5; i++){
+    for(i = 0; i < hosszusag; i++){
         jatekter += "<tr>"
-        for(f = 0; f < 8; f++){
+        for(f = 0; f < szelesseg; f++){
             jatekter += `<td id=${i}-${f} class='hely' onclick='elhelyezes(this)'>${helyek[i][f]}</td>`
         }
         jatekter += `</tr>`;
@@ -253,7 +255,7 @@ function frissites(){
     document.getElementById("jatekter").innerHTML = jatekter;
 }
 
-
+var lerakott = 0;
 
 function leRakhatoE(melyikkep,i,f,jelenlegifel,jelenlegile,jelenlegibal,jelenlegijobb){
     var feletti = helyek[Math.max(i-1,0)][f];
@@ -262,34 +264,49 @@ function leRakhatoE(melyikkep,i,f,jelenlegifel,jelenlegile,jelenlegibal,jelenleg
     var jobboldali = helyek[i][Math.min(f+1,7)];
     //kolostor, és mező
     if((melyikkep == 4 || melyikkep == 5) & ((feletti.includes('lent=mezo') || feletti.includes('semmi')) & (alatti.includes('fent=mezo') || alatti.includes('semmi')) & (baloldali.includes('jobb=mezo') || baloldali.includes('semmi')) & (jobboldali.includes('bal=mezo') || jobboldali.includes('semmi'))) ){
-        return true;
+        if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
+            return true;
+        }
     }//út3
     else if((melyikkep == 2) && ((feletti.includes('lent=ut') || feletti.includes('semmi')) && (alatti.includes('fent=ut') || alatti.includes('semmi')) && (baloldali.includes('jobb=ut') || baloldali.includes('semmi')) && (jobboldali.includes('bal=ut') || jobboldali.includes('semmi')))){
-        return true;
+        if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
+            return true;
+        }
     }//út1
     else if(melyikkep == 0 && ((jelenlegibal == "ut" && jelenlegile == "ut" &&  jelenlegifel == "mezo" && jelenlegijobb == "mezo" && (baloldali.includes('jobb=ut') ||baloldali.includes('semmi')) && (alatti.includes('fent=ut') || alatti.includes('semmi')) && (feletti.includes('lent=mezo') || feletti.includes('semmi')) && (jobboldali.includes('bal=mezo') || jobboldali.includes('semmi'))) || (jelenlegibal == "ut" && jelenlegifel == "ut" && jelenlegijobb == "mezo" && jelenlegile == "mezo" && (baloldali.includes("jobb=ut") || baloldali.includes('semmi')) && (feletti.includes('lent=ut') || feletti.includes('semmi')) && (jobboldali.includes('bal=mezo') || jobboldali.includes('semmi')) && (alatti.includes("fent=mezo") || alatti.includes("semmi")) ) || (jelenlegibal == "mezo" && jelenlegile == "ut" &&  jelenlegifel == "ut" && jelenlegijobb == "mezo" && (baloldali.includes('jobb=mezo') ||baloldali.includes('semmi')) && (alatti.includes('fent=mezo') || alatti.includes('semmi')) && (feletti.includes('lent=ut') || feletti.includes('semmi')) && (jobboldali.includes('bal=mezo') || jobboldali.includes('semmi'))) || (jelenlegibal == "mezo" && jelenlegijobb == "ut" && jelenlegifel == "mezo" && jelenlegile == "ut" && (baloldali.includes("jobb=mezo") || baloldali.includes('semmi')) && (jobboldali.includes("bal=ut") || jobboldali.includes("semmi")) && (feletti.includes("lent=mezo") || feletti.includes("semmi")) && (alatti.includes("fent=ut") || alatti.includes("semmi"))) || ((jelenlegibal == "mezo" && jelenlegile == "mezo" &&  jelenlegifel == "ut" && jelenlegijobb == "ut" && (baloldali.includes('jobb=mezo') ||baloldali.includes('semmi')) && (alatti.includes('fent=mezo') || alatti.includes('semmi')) && (feletti.includes('lent=ut') || feletti.includes('semmi')) && (jobboldali.includes('bal=ut') || jobboldali.includes('semmi')))))){
-        return true;
+        if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
+            return true;
+        }
     }//út2
     else if(melyikkep == 1 && (((jelenlegibal == "ut" && jelenlegijobb == "ut" && jelenlegifel == "mezo" && jelenlegile == "mezo" && (baloldali.includes('jobb=ut') || baloldali.includes('semmi')) && (jobboldali.includes('bal=ut') || jobboldali.includes('semmi')) && (feletti.includes('lent=mezo') || feletti.includes('semmi')) && (alatti.includes('fent=mezo') || alatti.includes('semmi'))) || (jelenlegifel = "ut" && jelenlegile == "ut" && jelenlegibal == "mezo" && jelenlegile == "ut" && jelenlegijobb == "mezo" && (feletti.includes('lent=ut') || feletti.includes('semmi')) && (alatti.includes('fent=ut') || alatti.includes('semmi')) && (baloldali.includes('jobb=mezo') || baloldali.includes('semmi')) && (jobboldali.includes('bal=mezo') ||  jobboldali.includes('semmi')))))){
-        return true;
+        if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
+            return true;
+        }
     }//út4
     else if(melyikkep == 3 && ((jelenlegibal == "mezo" && jelenlegifel == "ut" && jelenlegijobb == "ut" && jelenlegile == "ut" && (baloldali.includes('jobb=mezo') || baloldali.includes('semmi')) && (feletti.includes('lent=ut') || feletti.includes('semmi')) && (jobboldali.includes('bal=ut') || jobboldali.includes('semmi')) && (alatti.includes('fent=ut') || alatti.includes('semmi'))) || (jelenlegibal == "ut" && jelenlegifel == "mezo" && jelenlegijobb == "ut" && jelenlegile == "ut" && (baloldali.includes('jobb=ut') || baloldali.includes('semmi')) && (feletti.includes('lent=mezo') || feletti.includes('semmi')) && (jobboldali.includes('bal=ut') || jobboldali.includes('semmi')) && (alatti.includes('fent=ut') || alatti.includes('semmi'))) || (jelenlegibal == "ut" && jelenlegifel == "ut" && jelenlegijobb == "mezo" && jelenlegile == "ut" && (baloldali.includes('jobb=ut') || baloldali.includes('semmi')) && (feletti.includes('lent=ut') || feletti.includes('semmi')) && (jobboldali.includes('bal=mezo') || jobboldali.includes('semmi')) && (alatti.includes('fent=ut') || alatti.includes('semmi'))) || (jelenlegibal == "ut" && jelenlegifel == "ut" && jelenlegijobb == "ut" && jelenlegile == "mezo" && (baloldali.includes('jobb=ut') || baloldali.includes('semmi')) && (feletti.includes('lent=ut') || feletti.includes('semmi')) && (jobboldali.includes('bal=ut') || jobboldali.includes('semmi')) && (alatti.includes('fent=mezo') || alatti.includes('semmi'))))){
-        return true;
+        if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
+            return true;
+        }
     }//város1
     else if(melyikkep == 6 && ((jelenlegifel == "varos") && (feletti.includes('lent=varos') || feletti.includes('semmi')) && (jelenlegile == "varos" && (alatti.includes('fent=varos') || alatti.includes('semmi'))) && (jelenlegibal == "mezo" && (baloldali.includes('jobb=mezo') || baloldali.includes('semmi'))) && (jelenlegijobb == "mezo" && (jobboldali.includes('bal=mezo') || jobboldali.includes('semmi')))    ||     ((jelenlegifel == "mezo") && (feletti.includes('lent=mezo') || feletti.includes('semmi')) && (jelenlegile == "mezo" && (alatti.includes('fent=mezo') || alatti.includes('semmi'))) && (jelenlegibal == "varos") && (baloldali.includes('jobb=varos') || baloldali.includes('semmi'))) && (jelenlegijobb == "varos" && (jobboldali.includes('bal=varos') || jobboldali.includes('semmi'))))){
-        return true;
+        if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
+            return true;
+        }
     }//város2
     else if(melyikkep == 7 && ((jelenlegile == "ut" && jelenlegibal == "varos" && jelenlegifel == "varos" && jelenlegijobb == "varos" && (alatti.includes("fent=ut") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "ut" && jelenlegifel == "varos" && jelenlegijobb == "varos" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=ut') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "varos" && jelenlegifel == "ut" && jelenlegijobb == "varos" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=ut") || feletti.includes('semmi')) && (jobboldali.includes("varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "varos" && jelenlegifel == "varos" && jelenlegijobb == "ut" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("ut") || jobboldali.includes('semmi'))))){
-        return true;
+        if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
+            return true;
+        }
     }//város3
     else if(melyikkep == 8 && ((jelenlegibal == "varos" && jelenlegifel == "varos" && jelenlegile == "mezo" && jelenlegijobb == "mezo" && (baloldali.includes("jobb=varos") || baloldali.includes('semmi')) && (feletti.includes('lent=varos') || feletti.includes('semmi')) && (jobboldali.includes("bal=mezo") || jobboldali.includes('semmi')) && (alatti.includes("fent=mezo") || alatti.includes("semmi"))) || (jelenlegibal == "mezo" && jelenlegifel == "varos" && jelenlegile == "mezo" && jelenlegijobb == "varos" && (baloldali.includes("jobb=mezo") || baloldali.includes('semmi')) && (feletti.includes('lent=varos') || feletti.includes('semmi')) && (jobboldali.includes("bal=varos") || jobboldali.includes('semmi')) && (alatti.includes("fent=mezo") || alatti.includes("semmi"))) || (jelenlegibal == "mezo" && jelenlegijobb == "varos" && jelenlegile == "varos" && jelenlegifel == "mezo" && (baloldali.includes('jobb=mezo') ||baloldali.includes('semmi')) && (jobboldali.includes('bal=varos') || jobboldali.includes('semmi')) && (alatti.includes('fent=varos') || alatti.includes('semmi')) && (feletti.includes('mezo') || feletti.includes('semmi'))) || (jelenlegibal == "varos" && jelenlegifel == "mezo" && jelenlegile == "varos" && jelenlegijobb == "mezo" && (baloldali.includes("jobb=varos") || baloldali.includes('semmi')) && (feletti.includes('lent=mezo') || feletti.includes('semmi')) && (jobboldali.includes("bal=mezo") || jobboldali.includes('semmi')) && (alatti.includes("fent=varos") || alatti.includes("semmi"))))){
-        return true;
+        if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
+            return true;
+        }
     }//város 4
     else if(melyikkep == 9 && (((jelenlegibal == "varos" && jelenlegijobb == "varos" && jelenlegifel == "mezo" && jelenlegile == "mezo" && (baloldali.includes('jobb=varos') || baloldali.includes('semmi')) && (jobboldali.includes('bal=varos') || jobboldali.includes('semmi')) && (feletti.includes('lent=mezo') || feletti.includes('semmi')) && (alatti.includes('fent=mezo') || alatti.includes('semmi'))) || (jelenlegifel = "varos" && jelenlegile == "varos" && jelenlegibal == "mezo" && jelenlegile == "varos" && jelenlegijobb == "mezo" && (feletti.includes('lent=varos') || feletti.includes('semmi')) && (alatti.includes('fent=varos') || alatti.includes('semmi')) && (baloldali.includes('jobb=mezo') || baloldali.includes('semmi')) && (jobboldali.includes('bal=mezo') ||  jobboldali.includes('semmi')))    )  )){
-        return true;
-    }
-    else{
-        return false;
+        if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
+            return true;
+        }
     }
 }
 
@@ -298,7 +315,7 @@ function elhelyezes(hely){
     var i = (hely.id).split('-')[0];
     var f = (hely.id).split('-')[1];
     if(helyek[i][f].includes("semmi")){
-    for(k = 40; k > 0; k--){
+    for(k = szelesseg*hosszusag; k > 0; k--){
         if(document.getElementById(k) != undefined){
             var melyikkep = document.getElementById(k).getAttribute('kep');
             var irany = document.getElementById(k).style.rotate;
@@ -307,6 +324,8 @@ function elhelyezes(hely){
             document.getElementById(k).remove();
             pontok += 5;
             document.getElementById("pontszam").innerText = pontok;
+            lerakott++;
+            console.log(lerakott)
         }
         break;
         }
