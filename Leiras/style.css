@@ -1,0 +1,47 @@
+body {
+    background-image: url(hatterkep.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.kartya {
+    border: 3px solid white;
+    border-radius: 5%;
+    height: 850px;
+    margin: auto;
+    margin-top: 25px!important;
+    padding: 20px;
+    background-color: rgba(238, 207, 167, 0.6);
+    font-size: large;
+    display: inline-block;
+    font-family: 'Alkatra', cursive;
+}
+
+.kartya h1 {
+    text-align: center;
+}
+
+.kartya li {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: rgba(238, 207, 167, 0.7);
+    list-style-image: url(pajzs.png);
+    padding: 20px;
+    border-radius: 50px;
+}
+
+.sor {
+    margin-top: 40px!important;
+}
+
+#belsomargo {
+    padding: 2px;
+    padding-right: 9px;
+}
+
+img {
+    width: 13%;
+    margin-left: 42%;
+    margin-bottom: -4%;
+}

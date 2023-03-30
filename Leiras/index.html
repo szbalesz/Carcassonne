@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alkatra:wght@500&display=swap" rel="stylesheet">
+    <title>Carcassonne leírás</title>
+</head>
+
+<body>
+    <img src="./Carcassonne_Logo.png" alt="">
+    <div class="row col-12 sor">
+        <div class="kartya col-md-3">
+            <h1>Játékszabály</h1>
+            <ul>
+                <li>A játékot egy játékos játssza. Adott egy 5x8-as négyzetrácsos játéklap. A számítógép minden körben véletlenszerűen kiválaszt egy területkártyát, amit a játékosnak a megadott szabályok figyelembe vételével el kell helyeznie a játéklapon.</li>
+            </ul>
+            <h1>A játék akkor ér véget, ha:</h1>
+            <ul>
+                <li>A játékos nem tudja elhelyezni a szabályok szerint a területkártyáját, vagy betelt a játéklap.</li>
+                <li>A játék végén a lerakott területkártyák értékét összegezve, a számítógép kiírja a gyűjtött pontokat.</li>
+            </ul>
+        </div>
+        <div class="kartya col-md-3" id="belsomargo">
+            <h1>Területkártya elhelyzési szabályok:</h1>
+            <ul>
+                <li>Az első kártyát tetszőleges mezőre helyezhetjük.</li>
+                <li>A további kártyákat úgy kell lerakni, hogy legalább egy oldaluk illeszkedjen egy már lerakott laphoz. Nem elég, ha a kártyának csak a sarka érintkezik egy (vagy több), már letett lap sarkával!</li>
+                <li>Minden rét-, út-, és városrészletnek folytatódnia kell! Tehát a laphatáron rét csak réttel, város csak várossal érintkezhet, és a kártya széléhez futó útnak a másik kártyán folytatódnia kell.
+                </li>
+                <li>A játéklapot egy mezőre kattintással lehet letenni</li>
+                <li>A játéklapot elforgathatod ha rákatintassz a játéklapra</li>
+            </ul>
+        </div>
+        <div class=" kartya col-md-3">
+            <h1>Pontozás:</h1>
+            <ul>
+                <li>A városok értéke annyiszor 2 pont, ahány kártyából áll.</li>
+                <li>Egy befejezett városért plusz 5 pont jár.</li>
+                <li>Az utak értéke annyiszor 1 pont, ahány kártyából áll.</li>
+                <li>Egy befejezett útért plusz 2 pont jár.</li>
+                <li>A kolostor kártya annyi pontot ér, ahány szomszédja van (max. 8).</li>
+                <li>Ha a játék úgy ért véget, hogy betelt a játéklap, akkor plusz 10 pont.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
