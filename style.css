@@ -1,25 +1,46 @@
-#logo{
-    height: 150px;
-    text-align: center;
-    position: fixed;
-    top: 35%;
+body{
+    background-image: url("./kepek/hatterkep.jpg");
+    background-attachment: fixed;
+    background-size: cover;
 }
 
+body::-webkit-scrollbar
+{
+	width: 0px;
+}
+
+#logo{
+    height: 150px;
+    position: fixed;
+    top: -2%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    transition: all 1s ease-in-out!important;
+}
+#infologo{
+    height: 50px;
+    position: fixed;
+    bottom: 5%;
+    left: 5%;
+    transform: translate(-50%, 0%);
+    transition: all 1s ease-in-out!important;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px 10px white;
+}
+
+#menu{
+    margin-top: -60px;
+    transition: all 1s ease-in-out!important;
+}
 
 #pont{
     text-align: center;
     position: fixed;
-    right: 8%;
-    top: 15%;
+    left: 15px;
+    top: 10px;
+    font-size: 25px;
 }
-
-#legtobbpont{
-    text-align: center;
-    position: fixed;
-    right: 8%;
-    top: 10%;
-}
-
 
 #reset, #pontokmentese, #mentesgomb{
     text-align: center;
@@ -29,25 +50,13 @@
     border-radius: 5px;
 }
 
-#reset{
-    right: 8%;
-    bottom: 15%;
-}
-
-#pontokmentese{
-    bottom: 5%;
-    right: 5%;
-}
-
-#mentesgomb{
-    bottom: 10%;
-    right: 7%;
-}
-
 
 #jatekter{
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 15px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #jatekter td img{
@@ -59,9 +68,15 @@
 
 .kezdes{
     text-align: center;
-    position: fixed;
-    top: 40%;
-    left: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 275px;
+    padding: 25px;
+    padding-top: 50px;
+    border-radius: 25px;
+    height: 250px;
+    width: 475px;
+    background-color: rgba(0,0,0,0.2);
 }
 
 #kezdes{
@@ -69,6 +84,8 @@
     font-size: 30px;
     margin-top: 20px;
     border-radius: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
 }
 
 #jatekosnev{
@@ -83,11 +100,11 @@
     text-align: center;
     right: 5%;
     top: 30%;
-    background-color: black;
+    background-color: rgba(0,0,0,0.5);
     border-radius: 5%;
     color: white;
     width: 200px;
-    height: 200px;
+    height: 225px;
     box-shadow: 0px 0px 20px 20px rgb(0,0,0,0.4);
 }
 
@@ -100,4 +117,76 @@
     right: 26%;
     width: 100px;
     height: 100px;
+}
+
+#pontokmegtekintese{
+    position: fixed;
+    bottom: 2%;
+    right: 1%;
+}
+
+#pontokmenuadatok{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5%;
+    text-align: center;
+}
+
+
+#fooldal{
+    text-decoration: none;
+    position: fixed;
+    top: 1%;
+    right: 1%;
+    color: black;
+    background-color: rgba(255,255,255,0.7);
+    border-radius: 25px;
+    padding: 15px;
+    padding-bottom: 5px;
+    font-family: 'Alkatra', cursive;
+}
+
+.kartya {
+    border: 3px solid white;
+    border-radius: 25px;
+    height: auto;
+    margin: auto;
+    margin-top: 25px!important;
+    padding: 20px;
+    background-color: rgba(238, 207, 167, 0.6);
+    font-size: large;
+    display: inline-block;
+    font-family: 'Alkatra', cursive;
+}
+
+.kartya h1 {
+    text-align: center;
+}
+
+.kartya li {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: rgba(238, 207, 167, 0.7);
+    list-style-image: url(./kepek/pajzs.png);
+    padding: 20px;
+    border-radius: 50px;
+}
+
+.sor {
+    margin-top: 150px!important;
+}
+
+#belsomargo {
+    padding: 2px;
+    padding-right: 9px;
+}
+
+#masiklogo{
+    position: absolute;
+    top: -2%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    height: 150px;
 }

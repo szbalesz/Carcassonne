@@ -1,0 +1,18 @@
+Játékosnév - Pontszám
+-------------------------
+asd - 10
+asd - 15
+asd - 90
+asd - 15
+asd - 35
+ASD - 40
+asd - 50
+SzBalesz - 15
+asd - 10
+asd - 305
+asd - 0
+asd - 0
+asd - 0
+asd - 0
+asd - 0
+asd - 0

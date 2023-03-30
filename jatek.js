@@ -3,11 +3,6 @@ var szelesseg = 10;
 var hosszusag = 8;
 var lerakott = 0;
 var pont = 0;
-var legtobbpont = 0;
-
-if(localStorage.getItem("legtobbpont") > legtobbpont){
-    legtobbpont = localStorage.getItem("legtobbpont");
-}
 
 var darabok = [
     {tipus: "ut1",csatlakozasok: {fent: "mezo", lent: "ut", bal: "ut", jobb: "mezo"},kep: "./kepek/út1.jpg"},
@@ -30,11 +25,7 @@ for(i = 0; i < hosszusag;i++){
 }
 
 function reset(){
-    document.body.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/it/3/38/Carcassonne_Logo.png" id="logo"><script src="jatek.js"></script>`
-    if(pont > legtobbpont){
-        legtobbpont = pont;
-        localStorage.setItem("legtobbpont",legtobbpont);
-    };
+    document.getElementById("oldal").innerHTML = ``;
     kezdes();
     pont = 0;
     lerakott = 0;
@@ -77,7 +68,10 @@ function kezdes(){
     }
     var jatekter = "";
     var index = 0;
-    document.body.innerHTML += `<div id="darabokhelye"><h2>Jelenlegi darab</h2></div>`;
+    document.getElementById("oldal").innerHTML += `<div id="darabokhelye"><h2>Jelenlegi darab</h2></div>`;
+    document.getElementById("menu").style.marginTop = 0;
+    document.getElementById("logo").style.height = "80px";
+    document.getElementById("logo").style.left = "47%";
     jatekter += `<table id='jatekter'>`;
     generalas();
     urestabla();
@@ -91,14 +85,8 @@ function kezdes(){
         jatekter += "</tr>";
     }
     jatekter += "</table>";
-    document.body.innerHTML += `<button id="reset" onclick="reset()">Újrakezdés</button>`
-    document.body.innerHTML += `<button id="mentesgomb" onclick="pontokmentese(pont);">Pontok mentése</button>`
-    document.body.innerHTML += `<button id="pontokmentese" onclick="pontokmentesefajlba()">Pontok mentése fájlba</button>`
-    if(legtobbpont > 0){
-       document.body.innerHTML += `<h2 id="legtobbpont">Legtöbb pont: ${legtobbpont}</h2>` 
-    }
-    document.body.innerHTML += `<h2 id="pont">Pont: <span id="pontszam">0</span></h2>`
-    document.body.innerHTML += jatekter;
+    document.getElementById("oldal").innerHTML += `<h2 id="pont" class="nav-link">Pont: <span id="pontszam">0</span></h2>`
+    document.getElementById("oldal").innerHTML += jatekter;
 }
 
 
@@ -392,14 +380,14 @@ var pontok;
 function pontokmentese(pont){
     if(localStorage.getItem("pontok") == null){
         pontok = 
-        `Játékosnév - Pontszám\n----------------------\n`;
+        `Játékosnév - Pontszám\n-------------------------\n`;
         pontok += `${jatekosnev} - ${pont}` ;
         localStorage.setItem("pontok", pontok)
     }
     else{
         var eddigipontok = localStorage.getItem("pontok");;
         pontok = 
-        `Játékosnév - Pontszám\n----------------------\n`;
+        `Játékosnév - Pontszám\n-------------------------\n`;
         for(i = 2; i < eddigipontok.split('\n').length; i++){
             pontok+= eddigipontok.split('\n')[i]+"\n";
         }
@@ -407,9 +395,6 @@ function pontokmentese(pont){
         localStorage.setItem("pontok", pontok);
     }
 }
-console.log(localStorage.getItem("pontok"))
-
-
 
 function pontokmentesefajlba() {
     var szoveg;
@@ -424,10 +409,44 @@ function pontokmentesefajlba() {
     var url = URL.createObjectURL(file);
     a.href = url;
     a.download = "pontok.txt";
-    document.body.appendChild(a);
+    document.getElementById("oldal").appendChild(a);
     a.click();
     setTimeout(function() {
-      document.body.removeChild(a);
+      document.getElementById("oldal").removeChild(a);
       window.URL.revokeObjectURL(url);
     }, 0);
+}
+
+function pontokmegtekintese(){
+    if(document.getElementById("pontokmenuadatok").style.display == "block"){
+        document.getElementById("oldal").style.display = "";
+        document.getElementById("pontokmenuadatok").style.display = "none";
+    }
+    else{
+        document.getElementById("oldal").style.display = "none";
+        document.getElementById("pontokmenuadatok").style.display = "block";
+        document.getElementById("pontokmenuadatok").setAttribute("rows",localStorage.getItem("pontok").split('\n').length)
+    }
+    document.getElementById("pontokmenuadatok").innerHTML = localStorage.getItem("pontok");
+}
+
+function info(szam){
+    if(szam == 1){
+        document.getElementById("info").style.display = "block";
+        document.getElementById("oldal").style.display = "none";
+        document.getElementById("infogomb").style.display = "none";
+        document.getElementById("egyiklogo").style.display = "none";
+        document.getElementById("masiklogo").style.display = "block";
+        document.getElementById("pontokmegtekintese").style.display = "none";
+        document.getElementById("menu").style.display = "none";
+    }
+    else if(szam == 2){
+        document.getElementById("info").style.display = "none";
+        document.getElementById("oldal").style.display = "block";
+        document.getElementById("infogomb").style.display = "block";
+        document.getElementById("egyiklogo").style.display = "block";
+        document.getElementById("masiklogo").style.display = "none";
+        document.getElementById("pontokmegtekintese").style.display = "block";
+        document.getElementById("menu").style.display = "block";
+    }
 }
