@@ -2,7 +2,7 @@
 var szelesseg = 10;
 var hosszusag = 8;
 var lerakott = 0;
-var pontok = 0;
+var pont = 0;
 var legtobbpont = 0;
 
 if(localStorage.getItem("legtobbpont") > legtobbpont){
@@ -31,12 +31,12 @@ for(i = 0; i < hosszusag;i++){
 
 function reset(){
     document.body.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/it/3/38/Carcassonne_Logo.png" id="logo"><script src="jatek.js"></script>`
-    if(pontok > legtobbpont){
-        legtobbpont = pontok;
+    if(pont > legtobbpont){
+        legtobbpont = pont;
         localStorage.setItem("legtobbpont",legtobbpont);
     };
     kezdes();
-    pontok = 0;
+    pont = 0;
     lerakott = 0;
 }
 
@@ -60,10 +60,21 @@ function urestabla(){
 }
 
 function gombtorles(){
-    document.getElementById("kezdes").remove();
+    document.querySelector(".kezdes").remove();
+}
+
+var jatekosnev;
+
+function jatekosnevvaltas(){
+    if(document.getElementById("kezdes").getAttribute("disabled") == ""){
+        document.getElementById("kezdes").removeAttribute("disabled");
+    }
 }
 
 function kezdes(){
+    if(document.getElementById("jatekosnev") != null){
+        jatekosnev = document.getElementById("jatekosnev").value;
+    }
     var jatekter = "";
     var index = 0;
     document.body.innerHTML += `<div id="darabokhelye"><h2>Jelenlegi darab</h2></div>`;
@@ -81,6 +92,8 @@ function kezdes(){
     }
     jatekter += "</table>";
     document.body.innerHTML += `<button id="reset" onclick="reset()">Újrakezdés</button>`
+    document.body.innerHTML += `<button id="mentesgomb" onclick="pontokmentese(pont);">Pontok mentése</button>`
+    document.body.innerHTML += `<button id="pontokmentese" onclick="pontokmentesefajlba()">Pontok mentése fájlba</button>`
     if(legtobbpont > 0){
        document.body.innerHTML += `<h2 id="legtobbpont">Legtöbb pont: ${legtobbpont}</h2>` 
     }
@@ -364,8 +377,8 @@ function elhelyezes(hely){
         if(leRakhatoE(melyikkep,parseInt(i),parseInt(f),document.getElementById(k).getAttribute("fent"),document.getElementById(k).getAttribute("lent"),document.getElementById(k).getAttribute("bal"),document.getElementById(k).getAttribute("jobb"))){
             helyek[i][f] = `<img style="rotate: ${irany}" src="${darabok[melyikkep].kep}" id=${i}-${f}-kep darab=${melyikkep} fent=${document.getElementById(k).getAttribute("fent")} lent=${document.getElementById(k).getAttribute("lent")} bal=${document.getElementById(k).getAttribute("bal")} jobb=${document.getElementById(k).getAttribute("jobb")}>`;
             document.getElementById(k).remove();
-            pontok += 5;
-            document.getElementById("pontszam").innerText = pontok;
+            pont += 5;
+            document.getElementById("pontszam").innerText = pont;
             lerakott++;
         }
         break;
@@ -373,4 +386,48 @@ function elhelyezes(hely){
     }
     frissites();
     }
+}
+
+var pontok;
+function pontokmentese(pont){
+    if(localStorage.getItem("pontok") == null){
+        pontok = 
+        `Játékosnév - Pontszám\n----------------------\n`;
+        pontok += `${jatekosnev} - ${pont}` ;
+        localStorage.setItem("pontok", pontok)
+    }
+    else{
+        var eddigipontok = localStorage.getItem("pontok");;
+        pontok = 
+        `Játékosnév - Pontszám\n----------------------\n`;
+        for(i = 2; i < eddigipontok.split('\n').length; i++){
+            pontok+= eddigipontok.split('\n')[i]+"\n";
+        }
+        pontok+= `${jatekosnev} - ${pont}`;
+        localStorage.setItem("pontok", pontok);
+    }
+}
+console.log(localStorage.getItem("pontok"))
+
+
+
+function pontokmentesefajlba() {
+    var szoveg;
+    if(localStorage.getItem("pontok") == null){
+        szoveg = "Nincsenek elért pontszámok ezen a számítógépen!"
+    }
+    else{
+        szoveg = localStorage.getItem("pontok");
+    }
+    var file = new Blob([szoveg], {type: 'text/plain'});
+    var a = document.createElement("a");
+    var url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = "pontok.txt";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function() {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
 }
