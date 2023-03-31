@@ -10,7 +10,25 @@ body::-webkit-scrollbar
 }
 
 
+.blur{
+    filter: blur(2000px);
+}
 
+#vegeoldal{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    border-radius: 25px;
+    transform: translate(-50%, -50%);
+    padding: 25px;
+    text-align: center;
+    z-index: 9999;
+    width: auto;
+}
+
+#vegeoldal h2{
+    color: red;
+}
 
 #logo{
     height: 150px;
@@ -230,6 +248,9 @@ body::-webkit-scrollbar
      #darabokhelye{
          scale: 0.85;
          right: 1%;
+     }
+     #vegeoldal{
+        min-width: 75%;
      }
  }
  @media only screen and (max-width:900px) {

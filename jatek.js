@@ -30,6 +30,8 @@ function reset(){
     kezdes();
     pont = 0;
     lerakott = 0;
+    document.getElementById("vegeoldal").style.display = "none";
+    document.getElementById("oldal").classList.remove("blur");
 }
 //10 alap kártya + 70 darab véletlenszerűlegenerálása
 function generalas(){
@@ -90,6 +92,32 @@ function kezdes(){
     document.getElementById("oldal").innerHTML += jatekter;
 }
 
+//játék vége
+function vege(szam){
+    document.getElementById("vegeoldal").style.display = "block";
+    document.getElementById("oldal").classList.add("blur");
+    var vegeszoveg = "";
+    if(szam == 1){
+        vegeszoveg = "Nem maradt több elhelyezési lehetőség";
+    }
+    if(szam == 2){
+        vegeszoveg = "Feladtad a játékot"
+    }
+
+    document.getElementById("vegeoldal").innerHTML = `
+        <div class="card-header">
+              Játék vége
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">${vegeszoveg}</h5>
+              <p class="card-text">Elért pontszám: ${pont}</p>
+              <a href="./index.html" class="btn btn-primary">Főoldal</a>
+              <button class="btn btn-primary" onclick="reset()">Újrakezdés</button>
+        </div>`
+
+}
+
+var hanyiranybanemrakhatole = 0;
 //darab forgatása
 function forgatas(darab){
     var melyikkep = darab.getAttribute("kep");
@@ -285,6 +313,7 @@ function forgatas(darab){
             darab.setAttribute("jobb","varos");
         }
     }
+    hanyhely();
 }
 //tábla frissítése
 function frissites(){
@@ -294,12 +323,46 @@ function frissites(){
         jatekter += "<tr>"
         for(f = 0; f < szelesseg; f++){
             jatekter += `<td id=${i}-${f} class='hely' onclick='elhelyezes(this)'>${helyek[i][f]}</td>`
-        }
+    }
         jatekter += `</tr>`;
     }
     jatekter += `</table>`;
     document.getElementById("jatekter").innerHTML = jatekter;
+    hanyhely();
 }
+
+
+//hány helyre lehet elhelyezni a jelenlegi darabot
+function hanyhely(){
+    var hanyhelyrerakhatojelenleg = 0;
+    for(i = 0; i < hosszusag; i ++){
+        for(f = 0; f < szelesseg; f ++){
+            for(k = szelesseg*hosszusag; k > 0; k--){
+                if(document.getElementById(k) != undefined){
+                    var melyikkep = document.getElementById(k).getAttribute('kep');
+                    if(helyek[i][f].includes('semmi') && leRakhatoE(melyikkep,parseInt(i),parseInt(f),document.getElementById(k).getAttribute("fent"),document.getElementById(k).getAttribute("lent"),document.getElementById(k).getAttribute("bal"),document.getElementById(k).getAttribute("jobb"))){
+                        hanyhelyrerakhatojelenleg++;
+                        
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    if(hanyhelyrerakhatojelenleg == 0){
+        //vége
+        hanyiranybanemrakhatole++;
+        if(hanyiranybanemrakhatole == 4){
+            vege(1);
+        }
+    }
+    else{
+        hanyiranybanemrakhatole = 0;
+    }
+    console.log(hanyhelyrerakhatojelenleg);
+    
+}
+
 //darab lerakásának vizsglata
 function leRakhatoE(melyikkep,i,f,jelenlegifel,jelenlegile,jelenlegibal,jelenlegijobb){
     var feletti = helyek[Math.max(i-1,0)][f];
