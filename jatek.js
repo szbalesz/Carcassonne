@@ -96,6 +96,7 @@ function kezdes(){
 function vege(szam){
     document.getElementById("vegeoldal").style.display = "block";
     document.getElementById("oldal").classList.add("blur");
+    pontokmentese(pont);
     var vegeszoveg = "";
     if(szam == 1){
         vegeszoveg = "Nem maradt több elhelyezési lehetőség";
@@ -489,12 +490,18 @@ function pontoktorlese(){
 //pontok megtekintése oldal megjelenítése, és eltüntetése
 function pontokmegtekintese(){
     if(document.getElementById("pontokmenu").style.display == "block"){
+        if(document.getElementById("vegeoldal").style.display == "none"){
+            
+        }   
         document.getElementById("oldal").style.display = "";
         document.getElementById("pontokmenu").style.display = "none";
         document.getElementById("pontokmegtekintese").innerText = "Pontok megtekintése";
         document.getElementById("pontokmegtekintese").style.backgroundColor = "white";
     }
     else{
+        if(document.getElementById("vegeoldal").style.display == "block"){
+            document.getElementById("vegeoldal").style.display = "none";
+        }
         document.getElementById("oldal").style.display = "none";
         document.getElementById("pontokmenu").style.display = "block";
         document.getElementById("pontokmegtekintese").innerText = "Vissza a játékba";
