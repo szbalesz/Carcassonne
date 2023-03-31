@@ -9,6 +9,9 @@ body::-webkit-scrollbar
 	width: 0px;
 }
 
+
+
+
 #logo{
     height: 150px;
     position: fixed;
@@ -33,6 +36,9 @@ body::-webkit-scrollbar
     margin-top: -60px;
     transition: all 1s ease-in-out!important;
 }
+.nav-link{
+    color: black!important;
+}
 
 #pont{
     text-align: center;
@@ -40,6 +46,11 @@ body::-webkit-scrollbar
     left: 15px;
     top: 10px;
     font-size: 25px;
+}
+
+#pontokmegtekintese{
+    border-radius: 10px;
+    transition: all 1s ease-in-out;
 }
 
 #reset, #pontokmentese, #mentesgomb{
@@ -119,19 +130,26 @@ body::-webkit-scrollbar
     height: 100px;
 }
 
-#pontokmegtekintese{
-    position: fixed;
-    bottom: 2%;
-    right: 1%;
-}
 
 #pontokmenuadatok{
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 44%;
+    left: 47%;
+    height: 450px;
     transform: translate(-50%, -50%);
-    border-radius: 5%;
+    border-radius: 25px;
     text-align: center;
+}
+
+#pontokmenu .gombok{
+    position: fixed;
+    bottom: 1%;
+    left: 47%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+#pontokmenu .gombok button{
+    margin: 5px;
 }
 
 
@@ -182,11 +200,86 @@ body::-webkit-scrollbar
     padding: 2px;
     padding-right: 9px;
 }
-
-#masiklogo{
-    position: absolute;
-    top: -2%;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    height: 150px;
+@media only screen and (max-width:1333px) {
+   #jatekter{
+        left:50%;
+        scale: 0.95;
+    }
+    #darabokhelye{
+        scale: 0.85;
+        right: 1%;
+    }
 }
+@media only screen and (max-width:1200px) {
+    #jatekter{
+         left:10%;
+         top: 10%;
+         transform: translate(0, 0);
+         scale: 0.80;
+     }
+     #darabokhelye{
+         scale: 0.85;
+         right: 1%;
+     }
+ }
+ @media only screen and (max-width:1000px) {
+    #jatekter{
+         scale: 0.75;
+         left: 0%;
+     }
+     #darabokhelye{
+         scale: 0.85;
+         right: 1%;
+     }
+ }
+ @media only screen and (max-width:900px) {
+    #jatekter{
+         scale: 0.65;
+         top: 0%;
+         left: -15%;
+     }
+ }
+
+ @media only screen and (max-width:426px) {
+    #jatekter{
+        scale: 0.5;
+        top: -15%;
+        left: -39%;
+     }
+     #darabokhelye{
+        scale: 0.85;
+        right: 28%;
+        top: 65%;
+    }
+    #logo{
+        display: none;
+    }
+    #infologo{
+        left: 12%;
+    }
+ }
+ @media only screen and (max-width:376px) {
+    #jatekter{
+        scale: 0.45;
+        top: -15%;
+        left: -53%;
+    }
+ }
+ @media only screen and (max-width:320px) {
+    #jatekter{
+        scale: 0.40;
+        top: -15%;
+        left: -70%;
+    }
+    #darabokhelye {
+        scale: 0.75;
+        right: 20%;
+    }
+    #infologo{
+        scale: 0.75;
+    }
+    #pont{
+        top: 10%;
+        left: 40%;
+    }
+ }

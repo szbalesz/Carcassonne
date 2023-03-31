@@ -15,17 +15,14 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" id="menu">
         <div class="container-fluid">
-            <a href="" id="egyiklogo"><img src="./kepek/Carcassonne_Logo.png" id="logo"></a>
+            <a href=""><img src="./kepek/Carcassonne_Logo.png" id="logo"></a>
           <div class="nav justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav mx-auto">
+            <ul class="nav mx-auto">
                 <li class="nav-item">
-                    <button class="nav-link" onclick="reset()">Újrakezdés</button>
+                    <button class="nav-link" onclick="pontokmentese(pont),reset()">Feladás</button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" onclick="pontokmentese(pont)">Pont mentése</button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" onclick="pontokmentesefajlba()">Pontok letöltése fájlba</button>
+                    <button class="nav-link" id="pontokmegtekintese" onclick="pontokmegtekintese()">Pontok megtekintése</button>
                 </li>
             </ul>
           </div>
@@ -36,14 +33,24 @@
         <div class="input-group mb-3">
             <input type="text" class="form-control" id="jatekosnev" onchange="jatekosnevvaltas()" placeholder="Adj meg egy játékosnevet">
         </div>
-        <button id="kezdes" class="btn btn-primary" onclick="kezdes(),gombtorles()" disabled>Kezdés</button>
+        <button id="kezdes" class="btn btn-primary" onclick="kezdes(),kezdesoldaltorlese()" disabled>Kezdés</button>
     </div>
+    </div>
+    <div id="mindenfelett">
+        <button class="btn" onclick="info(1)" id="infogomb"><img src="./kepek/info.png" id="infologo"></button>
+        <div id="pontokmenu" style="display: none">
+            <textarea id="pontokmenuadatok" name="" cols="25" rows="15"></textarea>
+            <div class="gombok">
+                <button class="btn btn-primary" onclick="pontokmentesefajlba()">Pontok letöltése fájlba</button>
+                <br>
+                <button class="btn btn-primary" onclick="pontoktorlese()">Pontok törlése</button>
+            </div>
+        </div>
     </div>
     <div id="info" style="display:none">
-        <img id="masiklogo" src="./kepek/Carcassonne_Logo.png" id="logo">
         <button onclick="info(2)" id="fooldal"><h2>&#x2196; Vissza a játékba</h2></button>
         <div class="row col-12 sor">
-            <div class="kartya col-md-3">
+            <div class="kartya col-lg-3">
                 <h1>Játékszabály</h1>
                 <ul>
                     <li>A játékot egy játékos játssza. Adott egy 5x8-as négyzetrácsos játéklap. A számítógép minden körben véletlenszerűen kiválaszt egy területkártyát, amit a játékosnak a megadott szabályok figyelembe vételével el kell helyeznie a játéklapon.</li>
@@ -54,7 +61,7 @@
                     <li>A játék végén a lerakott területkártyák értékét összegezve, a számítógép kiírja a gyűjtött pontokat.</li>
                 </ul>
             </div>
-            <div class="kartya col-md-3" id="belsomargo">
+            <div class="kartya col-lg-3" id="belsomargo">
                 <h1>Területkártya elhelyzési szabályok:</h1>
                 <ul>
                     <li>Az első kártyát tetszőleges mezőre helyezhetjük.</li>
@@ -65,7 +72,7 @@
                     <li>A játéklapot elforgathatod ha rákatintassz a játéklapra</li>
                 </ul>
             </div>
-            <div class=" kartya col-md-3">
+            <div class=" kartya col-lg-3">
                 <h1>Pontozás:</h1>
                 <ul>
                     <li>A városok értéke annyiszor 2 pont, ahány kártyából áll.</li>
@@ -78,9 +85,6 @@
             </div>
         </div>
     </div>
-    <button id="pontokmegtekintese" class="btn btn-primary" onclick="pontokmegtekintese()">Pontok megtekintése</button>
-    <button onclick="info(1)" id="infogomb"><img src="./kepek/info.png" id="infologo"></button>
-    <textarea name="" id="pontokmenuadatok" cols="25" rows="15" style="display: none"></textarea>
     <script src="jatek.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 </body>

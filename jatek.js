@@ -4,6 +4,7 @@ var hosszusag = 8;
 var lerakott = 0;
 var pont = 0;
 
+//10 féle kártya,darab adatainak megadása
 var darabok = [
     {tipus: "ut1",csatlakozasok: {fent: "mezo", lent: "ut", bal: "ut", jobb: "mezo"},kep: "./kepek/út1.jpg"},
     {tipus: "ut2",csatlakozasok: {fent: "mezo", lent: "mezo", bal: "ut", jobb: "ut"},kep: "./kepek/út2.jpg"},
@@ -18,19 +19,19 @@ var darabok = [
 ]
 
 var generaltdarabok = [];
-
+//helyek 2 dimenziós töm létrehozása
 var helyek = new Array(hosszusag)
 for(i = 0; i < hosszusag;i++){
     helyek[i] = new Array(szelesseg);
 }
-
+//játék újra kezdése
 function reset(){
     document.getElementById("oldal").innerHTML = ``;
     kezdes();
     pont = 0;
     lerakott = 0;
 }
-
+//10 alap kártya + 70 darab véletlenszerűlegenerálása
 function generalas(){
     for(i = 0; i < szelesseg*hosszusag;i++){
         if(i < 10){
@@ -41,7 +42,7 @@ function generalas(){
         }
     }
 }
-
+//tábla üressé tétele
 function urestabla(){
     for(i = 0; i < hosszusag;i++){
         for(f = 0; f < szelesseg; f++){
@@ -49,19 +50,19 @@ function urestabla(){
         }
     }
 }
-
-function gombtorles(){
-    document.querySelector(".kezdes").remove();
-}
-
+//játékos névváltás
 var jatekosnev;
-
 function jatekosnevvaltas(){
     if(document.getElementById("kezdes").getAttribute("disabled") == ""){
         document.getElementById("kezdes").removeAttribute("disabled");
     }
 }
+//kezdesoldaltörlése
+function kezdesoldaltorlese(){
+    document.querySelector(".kezdes").remove();
+}
 
+//játék kezdése
 function kezdes(){
     if(document.getElementById("jatekosnev") != null){
         jatekosnev = document.getElementById("jatekosnev").value;
@@ -89,7 +90,7 @@ function kezdes(){
     document.getElementById("oldal").innerHTML += jatekter;
 }
 
-
+//darab forgatása
 function forgatas(darab){
     var melyikkep = darab.getAttribute("kep");
     if(darab.style.rotate == ""){
@@ -285,7 +286,7 @@ function forgatas(darab){
         }
     }
 }
-
+//tábla frissítése
 function frissites(){
     var jatekter = "";
     jatekter += `<table>`;
@@ -299,7 +300,7 @@ function frissites(){
     jatekter += `</table>`;
     document.getElementById("jatekter").innerHTML = jatekter;
 }
-
+//darab lerakásának vizsglata
 function leRakhatoE(melyikkep,i,f,jelenlegifel,jelenlegile,jelenlegibal,jelenlegijobb){
     var feletti = helyek[Math.max(i-1,0)][f];
     var alatti = helyek[Math.min(i+1,hosszusag-1)][f];
@@ -352,8 +353,7 @@ function leRakhatoE(melyikkep,i,f,jelenlegifel,jelenlegile,jelenlegibal,jelenleg
         }
     }
 }
-
-
+//darab elhelyezése
 function elhelyezes(hely){
     var i = (hely.id).split('-')[0];
     var f = (hely.id).split('-')[1];
@@ -375,7 +375,7 @@ function elhelyezes(hely){
     frissites();
     }
 }
-
+//pontokmentése, helyi tárolóba
 var pontok;
 function pontokmentese(pont){
     if(localStorage.getItem("pontok") == null){
@@ -395,7 +395,7 @@ function pontokmentese(pont){
         localStorage.setItem("pontok", pontok);
     }
 }
-
+//pontokmentése a helyi tárolóból fájlba
 function pontokmentesefajlba() {
     var szoveg;
     if(localStorage.getItem("pontok") == null){
@@ -416,37 +416,47 @@ function pontokmentesefajlba() {
       window.URL.revokeObjectURL(url);
     }, 0);
 }
+//pontok törlése
+function pontoktorlese(){
+    localStorage.setItem("pontok","");
+    document.getElementById("pontokmenuadatok").innerHTML = localStorage.getItem("pontok");
+}
 
+
+//pontok megtekintése oldal megjelenítése, és eltüntetése
 function pontokmegtekintese(){
-    if(document.getElementById("pontokmenuadatok").style.display == "block"){
+    if(document.getElementById("pontokmenu").style.display == "block"){
         document.getElementById("oldal").style.display = "";
-        document.getElementById("pontokmenuadatok").style.display = "none";
+        document.getElementById("pontokmenu").style.display = "none";
+        document.getElementById("pontokmegtekintese").innerText = "Pontok megtekintése";
+        document.getElementById("pontokmegtekintese").style.backgroundColor = "white";
     }
     else{
         document.getElementById("oldal").style.display = "none";
-        document.getElementById("pontokmenuadatok").style.display = "block";
-        document.getElementById("pontokmenuadatok").setAttribute("rows",localStorage.getItem("pontok").split('\n').length)
+        document.getElementById("pontokmenu").style.display = "block";
+        document.getElementById("pontokmegtekintese").innerText = "Vissza a játékba";
+        document.getElementById("pontokmegtekintese").style.backgroundColor = "#2EFF2E";
     }
     document.getElementById("pontokmenuadatok").innerHTML = localStorage.getItem("pontok");
 }
 
+//infó oldal megjelenítése, és eltüntetése
 function info(szam){
     if(szam == 1){
         document.getElementById("info").style.display = "block";
         document.getElementById("oldal").style.display = "none";
-        document.getElementById("infogomb").style.display = "none";
-        document.getElementById("egyiklogo").style.display = "none";
-        document.getElementById("masiklogo").style.display = "block";
-        document.getElementById("pontokmegtekintese").style.display = "none";
-        document.getElementById("menu").style.display = "none";
+        document.getElementById("logo").style.height = "150px";
+        document.getElementById("mindenfelett").style.display = "none";
+        document.getElementById("menu").style.marginTop = "-60px";
     }
     else if(szam == 2){
         document.getElementById("info").style.display = "none";
         document.getElementById("oldal").style.display = "block";
-        document.getElementById("infogomb").style.display = "block";
-        document.getElementById("egyiklogo").style.display = "block";
-        document.getElementById("masiklogo").style.display = "none";
-        document.getElementById("pontokmegtekintese").style.display = "block";
-        document.getElementById("menu").style.display = "block";
+        document.getElementById("mindenfelett").style.display = "block";
+        if(document.getElementById("jatekter") != null){
+            document.getElementById("menu").style.marginTop = "0";
+            document.getElementById("logo").style.height = "80px";
+            document.getElementById("logo").style.left = "47%";
+        }
     }
 }
