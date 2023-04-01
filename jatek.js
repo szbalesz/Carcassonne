@@ -129,7 +129,7 @@ function vege(szam){
     if(szam == 2){
         vegeszoveg = "Feladtad a játékot"
         megtekintesgombszoveg = "Játék folytatása";
-        mentesgomb = `<button class="btn btn-primary" onclick="pontokmentese(pont),nemfolytathatja()">Pont mentése</button>`
+        mentesgomb = `<button class="btn btn-primary" onclick="pontokmentese(pont),nemfolytathatja(),this.remove()">Pont mentése</button>`
         milyenvegelett = 2;
     }
 

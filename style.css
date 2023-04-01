@@ -43,6 +43,11 @@ body::-webkit-scrollbar
     transition: all 1s ease-in-out!important;
     z-index: 9997;
 }
+
+#info{
+    margin-top: 250px;
+}
+
 #infologo{
     height: 50px;
     position: fixed;
@@ -104,7 +109,7 @@ body::-webkit-scrollbar
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 275px;
+    margin-top: 400px;
     padding: 25px;
     padding-top: 50px;
     border-radius: 25px;
