@@ -474,20 +474,42 @@ function elhelyezes(hely){
 //pontokmentése, helyi tárolóba
 var pontok;
 function pontokmentese(pont){
-    if(localStorage.getItem("pontok") == null){
+    //ha még nincs mentett pont
+    if(localStorage.getItem("pontok") == ""){
         pontok = 
         `Játékosnév - Pontszám\n-------------------------\n`;
-        pontok += `${jatekosnev} - ${pont}` ;
+        pontok += `${jatekosnev} - ${pont}\n` ;
         localStorage.setItem("pontok", pontok)
-    }
+    }//ha már van mentett pont
     else{
-        var eddigipontok = localStorage.getItem("pontok");;
+        var eddigipontok = localStorage.getItem("pontok");
         pontok = 
         `Játékosnév - Pontszám\n-------------------------\n`;
-        for(i = 2; i < eddigipontok.split('\n').length; i++){
-            pontok+= eddigipontok.split('\n')[i]+"\n";
+        //növekvő sorrendbe rendezés
+        eddigipontok += `${jatekosnev} - ${pont}`;
+        var sorok = eddigipontok.split('\n');
+        var mentettpontok = new Array(sorok.length-2);
+        //pontok megszerzése
+        for(i = 2; i < sorok.length; i ++){
+            mentettpontok[i-2] = parseInt(sorok[i].split('-')[1]);
         }
-        pontok+= `${jatekosnev} - ${pont}`;
+        //pontok alapján a sorok rendezése növekvő sorrendbe
+        for(f = 0; f < mentettpontok.length; f++){
+            for(i = 0; i < mentettpontok.length; i++){
+                if(mentettpontok[i+1] > mentettpontok[i]){
+                    var ideiglenes = mentettpontok[i+1];
+                    var ideiglenessor = sorok[i+1+2];
+                    sorok[i+1+2] = sorok[i+2];
+                    sorok[i+2] = ideiglenessor;
+                    mentettpontok[i+1] = mentettpontok[i];
+                    mentettpontok[i] = ideiglenes;
+                }
+
+            }
+        }
+        for(i = 2; i < sorok.length; i++){
+            pontok+= sorok[i]+"\n";
+        }
         localStorage.setItem("pontok", pontok);
     }
 }
@@ -572,7 +594,7 @@ function megtekintes(){
     if(milyenvegelett == "1"){
     document.getElementById("menupontok").innerHTML += 
     `<li class="nav-item">
-        <button class="nav-link" id="vegeoldalmegtekintese" onclick="vege(${milyenvegelett})">Vége oldal megtekintése</button>
+        <button class="nav-link" id="vegeoldalmegtekintese" onclick="vege(${milyenvegelett},this.remove())">Vége oldal megtekintése</button>
     </li>`
     }
 }
