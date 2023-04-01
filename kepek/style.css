@@ -1,0 +1,315 @@
+body{
+    background-image: url("./kepek/hatterkep.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+body::-webkit-scrollbar
+{
+	width: 0px;
+}
+
+
+.blur{
+    filter: blur(2000px);
+}
+
+#vegeoldal{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    border-radius: 25px;
+    transform: translate(-50%, -50%);
+    padding: 25px;
+    text-align: center;
+    z-index: 9997;
+    width: auto;
+}
+
+#vegeoldal h2{
+    color: red;
+}
+
+#vegeoldal button{
+    margin: 5px;
+}
+
+#logo{
+    height: 150px;
+    position: fixed;
+    top: -2%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    transition: all 1s ease-in-out!important;
+    z-index: 9997;
+}
+#infologo{
+    height: 50px;
+    position: fixed;
+    bottom: 5%;
+    left: 5%;
+    transform: translate(-50%, 0%);
+    transition: all 1s ease-in-out!important;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px 10px white;
+}
+
+#menu{
+    margin-top: -60px;
+    transition: all 1s ease-in-out!important;
+}
+.nav-link{
+    color: black!important;
+}
+
+#pont{
+    text-align: center;
+    position: fixed;
+    left: 15px;
+    top: 10px;
+    font-size: 25px;
+}
+
+#pontokmegtekintese{
+    border-radius: 10px;
+    transition: all 1s ease-in-out;
+}
+
+#reset, #pontokmentese, #mentesgomb{
+    text-align: center;
+    position: fixed;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+
+#jatekter{
+    margin-top: 15px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#jatekter td img{
+    width: 75px;
+    height: 75px;
+    margin: 0px;
+}
+
+
+.kezdes{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 275px;
+    padding: 25px;
+    padding-top: 50px;
+    border-radius: 25px;
+    height: 250px;
+    width: 475px;
+    background-color: rgba(0,0,0,0.2);
+}
+
+#kezdes{
+    padding: 15px;
+    font-size: 30px;
+    margin-top: 20px;
+    border-radius: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+#jatekosnev{
+    height: 50px;
+    width: 500px;
+    font-size: 30px;
+    text-align: center;
+}
+
+#darabokhelye{
+    position: fixed;
+    text-align: center;
+    right: 5%;
+    top: 30%;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 5%;
+    color: white;
+    width: 200px;
+    height: 225px;
+    box-shadow: 0px 0px 20px 20px rgb(0,0,0,0.4);
+}
+
+#darabokhelye h2{
+    right: 7%;
+}
+
+#darabokhelye img{
+    position: absolute;
+    right: 26%;
+    width: 100px;
+    height: 100px;
+}
+
+
+#pontokmenuadatok{
+    position: fixed;
+    top: 44%;
+    left: 47%;
+    height: 450px;
+    transform: translate(-50%, -50%);
+    border-radius: 25px;
+    text-align: center;
+    z-index: 9998;
+}
+
+
+#pontokmenu .gombok{
+    position: fixed;
+    bottom: 1%;
+    left: 47%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+#pontokmenu .gombok button{
+    margin: 5px;
+}
+
+
+#fooldal{
+    text-decoration: none;
+    position: fixed;
+    bottom: 1%;
+    right: 1%;
+    color: black;
+    background-color: rgba(255,255,255,0.7);
+    border-radius: 25px;
+    padding: 15px;
+    padding-bottom: 5px;
+    font-family: 'Alkatra', cursive;
+    z-index: 9999;
+}
+
+.kartya {
+    border: 3px solid white;
+    border-radius: 25px;
+    height: auto;
+    margin: auto;
+    margin-top: 25px!important;
+    padding: 20px;
+    background-color: rgba(238, 207, 167, 0.6);
+    font-size: large;
+    display: inline-block;
+    font-family: 'Alkatra', cursive;
+    z-index: 9998;
+}
+
+.kartya h1 {
+    text-align: center;
+}
+
+.kartya li {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: rgba(238, 207, 167, 0.7);
+    list-style-image: url(./kepek/pajzs.png);
+    padding: 20px;
+    border-radius: 50px;
+}
+
+.sor {
+    margin-top: 150px!important;
+}
+
+#belsomargo {
+    padding: 2px;
+    padding-right: 9px;
+}
+@media only screen and (max-width:1333px) {
+   #jatekter{
+        left:50%;
+        scale: 0.95;
+    }
+    #darabokhelye{
+        scale: 0.85;
+        right: 1%;
+    }
+}
+@media only screen and (max-width:1200px) {
+    #jatekter{
+         left:10%;
+         top: 10%;
+         transform: translate(0, 0);
+         scale: 0.80;
+     }
+     #darabokhelye{
+         scale: 0.85;
+         right: 1%;
+     }
+ }
+ @media only screen and (max-width:1000px) {
+    #jatekter{
+         scale: 0.75;
+         left: 0%;
+     }
+     #darabokhelye{
+         scale: 0.85;
+         right: 1%;
+     }
+     #vegeoldal{
+        min-width: 75%;
+     }
+ }
+ @media only screen and (max-width:900px) {
+    #jatekter{
+         scale: 0.65;
+         top: 0%;
+         left: -15%;
+     }
+ }
+
+ @media only screen and (max-width:426px) {
+    #jatekter{
+        scale: 0.5;
+        top: -15%;
+        left: -39%;
+     }
+     #darabokhelye{
+        scale: 0.85;
+        right: 28%;
+        top: 65%;
+    }
+    #logo{
+        display: none;
+    }
+    #infologo{
+        left: 12%;
+    }
+ }
+ @media only screen and (max-width:376px) {
+    #jatekter{
+        scale: 0.45;
+        top: -15%;
+        left: -53%;
+    }
+ }
+ @media only screen and (max-width:320px) {
+    #jatekter{
+        scale: 0.40;
+        top: -15%;
+        left: -70%;
+    }
+    #darabokhelye {
+        scale: 0.75;
+        right: 20%;
+    }
+    #infologo{
+        scale: 0.75;
+    }
+    #pont{
+        top: 10%;
+        left: 40%;
+    }
+ }
