@@ -1,8 +1,0 @@
-Játékosnév - Pontszám
-----------------------
-asd - 10
-asd - 15
-asd - 90
-asd - 15
-asd - 35
-ASD - 40
