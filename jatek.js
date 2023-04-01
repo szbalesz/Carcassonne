@@ -3,6 +3,7 @@ var szelesseg = 10;
 var hosszusag = 8;
 var lerakott = 0;
 var pont = 0;
+var milyenvegelett = 0;
 
 //10 féle kártya,darab adatainak megadása
 var darabok = [
@@ -26,6 +27,7 @@ for(i = 0; i < hosszusag;i++){
 }
 //játék újra kezdése
 function reset(){
+    milyenvegelett = 0;
     document.getElementById("oldal").innerHTML = ``;
     kezdes();
     pont = 0;
@@ -92,17 +94,24 @@ function kezdes(){
     document.getElementById("oldal").innerHTML += jatekter;
 }
 
+
 //játék vége
 function vege(szam){
     document.getElementById("vegeoldal").style.display = "block";
     document.getElementById("oldal").classList.add("blur");
-    pontokmentese(pont);
     var vegeszoveg = "";
+    var megtekintesgombszoveg = "";
+    var mentesgomb = "";
     if(szam == 1){
         vegeszoveg = "Nem maradt több elhelyezési lehetőség";
+        megtekintesgombszoveg = "Játéktér megtekintése";
+        milyenvegelett = 1;
     }
     if(szam == 2){
         vegeszoveg = "Feladtad a játékot"
+        megtekintesgombszoveg = "Játék folytatása";
+        mentesgomb = `<button class="btn btn-primary" onclick="pontokmentese(pont),nemfolytathatja()">Pont mentése</button>`
+        milyenvegelett = 2;
     }
 
     document.getElementById("vegeoldal").innerHTML = `
@@ -114,11 +123,15 @@ function vege(szam){
               <p class="card-text">Elért pontszám: ${pont}</p>
               <a href="./index.html" class="btn btn-primary">Főoldal</a>
               <button class="btn btn-primary" onclick="reset()">Újrakezdés</button>
+              <br>
+              <button class="btn btn-primary" id="megtekintesvagyvisszateres" onclick="megtekintes()">${megtekintesgombszoveg}</button>
+              ${mentesgomb}
         </div>`
 
 }
 
 var hanyiranybanemrakhatole = 0;
+
 //darab forgatása
 function forgatas(darab){
     var melyikkep = darab.getAttribute("kep");
@@ -314,7 +327,6 @@ function forgatas(darab){
             darab.setAttribute("jobb","varos");
         }
     }
-    hanyhely();
 }
 //tábla frissítése
 function frissites(){
@@ -329,39 +341,59 @@ function frissites(){
     }
     jatekter += `</table>`;
     document.getElementById("jatekter").innerHTML = jatekter;
-    hanyhely();
+    //következő kártya minden irányának lerakhatóságának vizsgálata
+    if(hanyhely() == 0){
+            hanyiranybanemrakhatole = 0; 
+            for(k = szelesseg*hosszusag; k > 0; k--){
+                if(document.getElementById(k) != undefined){
+                    var irany = document.getElementById(k).style.rotate;
+                    for(l = 0; l < 4; l++){
+                        forgatas(document.getElementById(k));
+                        var hanyhelyrelehet = hanyhely();
+                        if(irany == "" && hanyiranybanemrakhatole == 0 && hanyhelyrelehet == 0){
+                            hanyiranybanemrakhatole++;
+                        }
+                        else if(irany == "90deg" && hanyhelyrelehet == 0){
+                            hanyiranybanemrakhatole++;
+                        }
+                        else if(irany == "180deg" && hanyhelyrelehet == 0){
+                            hanyiranybanemrakhatole++;
+                        }
+                        else if(irany == "270deg" && hanyhelyrelehet == 0){
+                            hanyiranybanemrakhatole++;
+                        }
+                        irany = document.getElementById(k).style.rotate;
+                        if(hanyiranybanemrakhatole == 4){
+                            pontokmentese(pont);
+                            vege(1);
+                        }
+                    }
+                    break;
+            }
+        }
+    }
 }
 
 
 //hány helyre lehet elhelyezni a jelenlegi darabot
 function hanyhely(){
     var hanyhelyrerakhatojelenleg = 0;
+    var irany = "";
     for(i = 0; i < hosszusag; i ++){
         for(f = 0; f < szelesseg; f ++){
-            for(k = szelesseg*hosszusag; k > 0; k--){
+            for(k = (szelesseg*hosszusag); k > 0; k--){
                 if(document.getElementById(k) != undefined){
                     var melyikkep = document.getElementById(k).getAttribute('kep');
+                    irany = document.getElementById(k).style.rotate;
                     if(helyek[i][f].includes('semmi') && leRakhatoE(melyikkep,parseInt(i),parseInt(f),document.getElementById(k).getAttribute("fent"),document.getElementById(k).getAttribute("lent"),document.getElementById(k).getAttribute("bal"),document.getElementById(k).getAttribute("jobb"))){
-                        hanyhelyrerakhatojelenleg++;
-                        
+                        hanyhelyrerakhatojelenleg++; 
                     }
                     break;
                 }
             }
         }
-    }
-    if(hanyhelyrerakhatojelenleg == 0){
-        //vége
-        hanyiranybanemrakhatole++;
-        if(hanyiranybanemrakhatole == 4){
-            vege(1);
-        }
-    }
-    else{
-        hanyiranybanemrakhatole = 0;
-    }
-    console.log(hanyhelyrerakhatojelenleg);
-    
+    } 
+   return hanyhelyrerakhatojelenleg;  
 }
 
 //darab lerakásának vizsglata
@@ -436,8 +468,8 @@ function elhelyezes(hely){
         break;
         }
     }
-    frissites();
     }
+    frissites();
 }
 //pontokmentése, helyi tárolóba
 var pontok;
@@ -487,22 +519,24 @@ function pontoktorlese(){
 }
 
 
-//pontok megtekintése oldal megjelenítése, és eltüntetése
+//pontok megtekintése oldal megjelenítése mindenfelett, és eltüntetése
 function pontokmegtekintese(){
     if(document.getElementById("pontokmenu").style.display == "block"){
-        if(document.getElementById("vegeoldal").style.display == "none"){
-            
+        if(document.getElementById("vegeoldal").classList.contains("blur")){
+            document.getElementById("vegeoldal").classList.remove("blur");
         }   
-        document.getElementById("oldal").style.display = "";
+        if(!document.getElementById("vegeoldal").innerHTML.includes("vége")){
+            document.getElementById("oldal").classList.remove("blur");
+        }
         document.getElementById("pontokmenu").style.display = "none";
         document.getElementById("pontokmegtekintese").innerText = "Pontok megtekintése";
         document.getElementById("pontokmegtekintese").style.backgroundColor = "white";
     }
     else{
         if(document.getElementById("vegeoldal").style.display == "block"){
-            document.getElementById("vegeoldal").style.display = "none";
+            document.getElementById("vegeoldal").classList.add("blur");
         }
-        document.getElementById("oldal").style.display = "none";
+        document.getElementById("oldal").classList.add("blur");
         document.getElementById("pontokmenu").style.display = "block";
         document.getElementById("pontokmegtekintese").innerText = "Vissza a játékba";
         document.getElementById("pontokmegtekintese").style.backgroundColor = "#2EFF2E";
@@ -529,4 +563,20 @@ function info(szam){
             document.getElementById("logo").style.left = "47%";
         }
     }
+}
+
+function megtekintes(){
+    document.getElementById("oldal").classList.remove("blur");
+    document.getElementById("vegeoldal").innerHTML = "";
+    document.getElementById("vegeoldal").style.display = "none";
+    if(milyenvegelett == "1"){
+    document.getElementById("menupontok").innerHTML += 
+    `<li class="nav-item">
+        <button class="nav-link" id="vegeoldalmegtekintese" onclick="vege(${milyenvegelett})">Vége oldal megtekintése</button>
+    </li>`
+    }
+}
+
+function nemfolytathatja(){
+    document.getElementById("megtekintesvagyvisszateres").remove();
 }
