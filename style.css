@@ -56,7 +56,7 @@ body::-webkit-scrollbar
 }
 
 #menu{
-    margin-top: -60px;
+    margin-top: -200px;
     transition: all 1s ease-in-out!important;
 }
 .nav-link{
