@@ -475,7 +475,7 @@ function elhelyezes(hely){
 var pontok;
 function pontokmentese(pont){
     //ha még nincs mentett pont
-    if(localStorage.getItem("pontok") == ""){
+    if(localStorage.getItem("pontok") == "" || localStorage.getItem("pontok") == undefined){
         pontok = 
         `Játékosnév - Pontszám\n-------------------------\n`;
         pontok += `${jatekosnev} - ${pont}\n` ;
