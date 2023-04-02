@@ -26,12 +26,22 @@ body::-webkit-scrollbar
     width: auto;
 }
 
+#vegeoldal span{
+    font-size: 15px;
+}
+
 #vegeoldal h2{
     color: red;
 }
 
 #vegeoldal button{
     margin: 5px;
+}
+
+#vegeoldalmegtekintese{
+    background-color: #2EFF2E;
+    border-radius: 10px;
+    transition: all 1s ease-in-out!important;
 }
 
 #logo{

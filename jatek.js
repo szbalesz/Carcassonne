@@ -135,7 +135,7 @@ function vege(szam){
 
     document.getElementById("vegeoldal").innerHTML = `
         <div class="card-header">
-              Játék vége
+              <span class="badge bg-secondary">Játék vége</span>
             </div>
             <div class="card-body">
               <h5 class="card-title">${vegeszoveg}</h5>
@@ -440,7 +440,7 @@ function leRakhatoE(melyikkep,i,f,jelenlegifel,jelenlegile,jelenlegibal,jelenleg
     var jobboldali = helyek[i][Math.min(f+1,szelesseg-1)];
     //aztán megvizsgáljuk, hogy a kártya lerakható-e
     //kolostor, és mező
-    if((melyikkep == 4 || melyikkep == 5) & ((feletti.includes('lent=mezo') || feletti.includes('semmi')) & (alatti.includes('fent=mezo') || alatti.includes('semmi')) & (baloldali.includes('jobb=mezo') || baloldali.includes('semmi')) & (jobboldali.includes('bal=mezo') || jobboldali.includes('semmi'))) ){
+    if((melyikkep == 4 || melyikkep == 5) && ((feletti.includes('lent=mezo') || feletti.includes('semmi')) && (alatti.includes('fent=mezo') || alatti.includes('semmi')) && (baloldali.includes('jobb=mezo') || baloldali.includes('semmi')) && (jobboldali.includes('bal=mezo') || jobboldali.includes('semmi'))) ){
         if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
             return true;
         }
@@ -470,7 +470,7 @@ function leRakhatoE(melyikkep,i,f,jelenlegifel,jelenlegile,jelenlegibal,jelenleg
             return true;
         }
     }//város2
-    else if(melyikkep == 7 && ((jelenlegile == "ut" && jelenlegibal == "varos" && jelenlegifel == "varos" && jelenlegijobb == "varos" && (alatti.includes("fent=ut") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "ut" && jelenlegifel == "varos" && jelenlegijobb == "varos" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=ut') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "varos" && jelenlegifel == "ut" && jelenlegijobb == "varos" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=ut") || feletti.includes('semmi')) && (jobboldali.includes("varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "varos" && jelenlegifel == "varos" && jelenlegijobb == "ut" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("bal=ut") || jobboldali.includes('semmi'))))){
+    else if(melyikkep == 7 && ((jelenlegile == "ut" && jelenlegibal == "varos" && jelenlegifel == "varos" && jelenlegijobb == "varos" && (alatti.includes("fent=ut") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("bal=varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "ut" && jelenlegifel == "varos" && jelenlegijobb == "varos" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=ut') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "varos" && jelenlegifel == "ut" && jelenlegijobb == "varos" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=ut") || feletti.includes('semmi')) && (jobboldali.includes("varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "varos" && jelenlegifel == "varos" && jelenlegijobb == "ut" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("bal=ut") || jobboldali.includes('semmi'))))){
         if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
             return true;
         }
@@ -604,9 +604,9 @@ function pontokmegtekintese(){
             document.getElementById("vegeoldal").classList.remove("blur");
         }   
         //ha nem a játék vége oldalról kerültünk a menübe
-        //vagyis a vége oldalon nem létezik a "vége" szöveg,
+        //vagyis a "milyenvegelett" = 0
         //akkor megjelenítjük a játékot
-        if(!document.getElementById("vegeoldal").innerHTML.includes("vége")){
+        if(milyenvegelett == "0"){
             document.getElementById("oldal").classList.remove("blur");
         }
         //eltüntetjük a pontok oldalt
@@ -626,7 +626,7 @@ function pontokmegtekintese(){
         //megjelenítjük a pontok oldalt, az adatokkal
         document.getElementById("pontokmenu").style.display = "block";
         //megváltoztatjuk a menüpont nevét
-        document.getElementById("pontokmegtekintese").innerText = "Vissza a játékba";
+        document.getElementById("pontokmegtekintese").innerText = "Vissza";
         //megváltoztatjuk a menüpont hátterét zöldre
         document.getElementById("pontokmegtekintese").style.backgroundColor = "#2EFF2E";
     }
@@ -679,7 +679,7 @@ function megtekintes(){
     if(milyenvegelett == "1"){
     document.getElementById("menupontok").innerHTML += 
     `<li class="nav-item">
-        <button class="nav-link" id="vegeoldalmegtekintese" onclick="vege(${milyenvegelett},this.remove())">Vége oldal megtekintése</button>
+        <button class="nav-link" id="vegeoldalmegtekintese" onclick="vege(${milyenvegelett},this.remove())">Vissza</button>
     </li>`
     }
 }
