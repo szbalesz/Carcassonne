@@ -6,7 +6,6 @@ var pont = 0;
 var milyenvegelett = 0;
 var hanyiranybanemrakhatole = 0;
 
-
 //10 féle kártya,darab adatainak megadása
 var darabok = [
     {tipus: "ut1",csatlakozasok: {fent: "mezo", lent: "ut", bal: "ut", jobb: "mezo"},kep: "./kepek/út1.jpg"},
@@ -45,18 +44,18 @@ function reset(){
     pont = 0;
     lerakott = 0;
     document.getElementById("vegeoldal").style.display = "none";
-    document.getElementById("oldal").classList.remove("blur");
+    document.getElementById("oldal").style.opacity = "1";
 }
 //tábla üressé tétele
 function urestabla(){
     for(i = 0; i < hosszusag;i++){
         for(f = 0; f < szelesseg; f++){
-            helyek[i][f] = `<img style='border: 1px solid black;' darab='semmi' id=${i}-${f}-kep src='./kepek/semmi.png'>`;
+            helyek[i][f] = `<img style='border: 1px solid black;' darab='semmi' id=${i}-${f}-kep src='./kepek/semmi.png'`;
         }
     }
 }
 //játékos amikor megadja a nevét akkor kezdheti el a játékot
-var jatekosnev;
+var jatekosnev = "";
 function jatekosnevvaltas(){
     if(document.getElementById("kezdes").getAttribute("disabled") == ""){
         document.getElementById("kezdes").removeAttribute("disabled");
@@ -66,14 +65,13 @@ function jatekosnevvaltas(){
 function kezdesoldaltorlese(){
     document.querySelector(".kezdes").remove();
 }
-
 //játék kezdése
 function kezdes(){
     //ha megadott játékosnevet
-    if(document.getElementById("jatekosnev") != null){
+    if(document.getElementById("jatekosnev") != undefined){
         jatekosnev = document.getElementById("jatekosnev").value;
     }//ha nem adott meg
-    else{
+    else if(jatekosnev == ""){
         jatekosnev = "Játékos";
     }
     //játéktér létrehozása
@@ -86,7 +84,7 @@ function kezdes(){
     document.getElementById("menu").style.marginTop = 0;
     //a logót áthelyezzük
     document.getElementById("logo").style.height = "80px";
-    document.getElementById("logo").style.left = "47%";
+    document.getElementById("logo").style.left = "50%";
     //játéktér ténylegse létrehozása
     jatekter += `<table id='jatekter'>`;
     generalas();
@@ -109,14 +107,12 @@ function kezdes(){
     document.getElementById("oldal").innerHTML += `<h2 id="pont" class="nav-link">Pont: <span id="pontszam">0</span></h2>`
     document.getElementById("oldal").innerHTML += jatekter;
 }
-
-
 //játék vége
 function vege(szam){
     //megjelenítjük a vége oldalt
     document.getElementById("vegeoldal").style.display = "block";
-    //a játék oldalt elhomályosítjuk
-    document.getElementById("oldal").classList.add("blur");
+    //a játék oldalt eltüntetjük
+    document.getElementById("oldal").style.opacity = "0";;
     var vegeszoveg = "";
     var megtekintesgombszoveg = "";
     var mentesgomb = "";
@@ -132,14 +128,14 @@ function vege(szam){
         mentesgomb = `<button class="btn btn-primary" onclick="pontokmentese(pont),nemfolytathatja(),this.remove()">Pont mentése</button>`
         milyenvegelett = 2;
     }
-
+    document.getElementById("logo").style.height ="150px";
     document.getElementById("vegeoldal").innerHTML = `
         <div class="card-header">
-              <span class="badge bg-secondary">Játék vége</span>
+              <span class="badge bg-primary">Játék vége</span>
             </div>
             <div class="card-body">
               <h5 class="card-title">${vegeszoveg}</h5>
-              <p class="card-text">Elért pontszám: ${pont}</p>
+              <p class="card-text">Játékos: <strong>${jatekosnev}</strong><br>Elért pontszám: <strong>${pont}</strong></p>
               <a href="./index.html" class="btn btn-primary">Főoldal</a>
               <button class="btn btn-primary" onclick="reset()">Újrakezdés</button>
               <br>
@@ -148,8 +144,6 @@ function vege(szam){
         </div>`
 
 }
-
-
 //darab forgatása
 function forgatas(darab){
     var melyikkep = darab.getAttribute("kep");
@@ -395,6 +389,10 @@ function frissites(){
                         if(hanyiranybanemrakhatole == 4){
                             //elmentjük a pontjait
                             pontokmentese(pont);
+                            //vissza gomb eltüntetése, ha a menüsoron lenne
+                            if(document.getElementById("vegeoldalmegtekintese") != null){
+                                document.getElementById("vegeoldalmegtekintese").remove();
+                            }
                             //vége a játéknak
                             vege(1);
                         }
@@ -404,7 +402,6 @@ function frissites(){
         }
     }
 }
-
 //hány helyre lehet elhelyezni a jelenlegi darabot
 function hanyhely(){
     var hanyhelyrerakhatojelenleg = 0;
@@ -430,7 +427,6 @@ function hanyhely(){
    //visszaküldjük, hogy hány helyre rakható le a jelenlegikártya
    return hanyhelyrerakhatojelenleg;  
 }
-
 //darab lerakásának vizsglata
 function leRakhatoE(melyikkep,i,f,jelenlegifel,jelenlegile,jelenlegibal,jelenlegijobb){
     //a bejövő paraméterek alapján megkeressük a lerakási hely körüli kártyákat
@@ -470,7 +466,7 @@ function leRakhatoE(melyikkep,i,f,jelenlegifel,jelenlegile,jelenlegibal,jelenleg
             return true;
         }
     }//város2
-    else if(melyikkep == 7 && ((jelenlegile == "ut" && jelenlegibal == "varos" && jelenlegifel == "varos" && jelenlegijobb == "varos" && (alatti.includes("fent=ut") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("bal=varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "ut" && jelenlegifel == "varos" && jelenlegijobb == "varos" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=ut') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "varos" && jelenlegifel == "ut" && jelenlegijobb == "varos" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=ut") || feletti.includes('semmi')) && (jobboldali.includes("varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "varos" && jelenlegifel == "varos" && jelenlegijobb == "ut" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("bal=ut") || jobboldali.includes('semmi'))))){
+    else if(melyikkep == 7 && ((jelenlegile == "ut" && jelenlegibal == "varos" && jelenlegifel == "varos" && jelenlegijobb == "varos" && (alatti.includes("fent=ut") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("bal=varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "ut" && jelenlegifel == "varos" && jelenlegijobb == "varos" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=ut') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("bal=varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "varos" && jelenlegifel == "ut" && jelenlegijobb == "varos" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=ut") || feletti.includes('semmi')) && (jobboldali.includes("varos") || jobboldali.includes('semmi'))) || (jelenlegile == "varos" && jelenlegibal == "varos" && jelenlegifel == "varos" && jelenlegijobb == "ut" && (alatti.includes("fent=varos") || alatti.includes("semmi")) && (baloldali.includes('jobb=varos') || baloldali.includes("semmi")) && (feletti.includes("lent=varos") || feletti.includes('semmi')) && (jobboldali.includes("bal=ut") || jobboldali.includes('semmi'))))){
         if(lerakott == 0 || !(feletti.includes("semmi") && alatti.includes("semmi") && baloldali.includes("semmi") && jobboldali.includes("semmi"))){
             return true;
         }
@@ -594,20 +590,19 @@ function pontoktorlese(){
     //és a pontokmenüből is kitöröljük a pontokat
     document.getElementById("pontokmenuadatok").innerHTML = localStorage.getItem("pontok");
 }
-
 //pontok megtekintése oldal megjelenítése mindenfelett, és eltüntetése
 function pontokmegtekintese(){
     //ha már megvan jelenítve, akkor eltüntetjük
     if(document.getElementById("pontokmenu").style.display == "block"){
         //ha a játék vége oldalról kerültünk a menübe
-        if(document.getElementById("vegeoldal").classList.contains("blur")){
-            document.getElementById("vegeoldal").classList.remove("blur");
+        if(document.getElementById("vegeoldal").style.opacity == "0"){
+            document.getElementById("vegeoldal").style.opacity = "1";
         }   
         //ha nem a játék vége oldalról kerültünk a menübe
         //vagyis a "milyenvegelett" = 0
         //akkor megjelenítjük a játékot
         if(milyenvegelett == "0"){
-            document.getElementById("oldal").classList.remove("blur");
+            document.getElementById("oldal").style.opacity = "1";
         }
         //eltüntetjük a pontok oldalt
         document.getElementById("pontokmenu").style.display = "none";
@@ -617,12 +612,12 @@ function pontokmegtekintese(){
         document.getElementById("pontokmegtekintese").style.backgroundColor = "white";
     }//ha még nincs megjelenítve akkor megjelenítjük
     else{
-        //ha a játék vége oldal megvan jelenítve, akkor azt elhomályosítjuk
+        //ha a játék vége oldal megvan jelenítve, akkor azt eltüntetjük
         if(document.getElementById("vegeoldal").style.display == "block"){
-            document.getElementById("vegeoldal").classList.add("blur");
+            document.getElementById("vegeoldal").style.opacity = "0";
         }
-        //a játékot is elhomályosítjuk
-        document.getElementById("oldal").classList.add("blur");
+        //a játékot is eltüntetjük
+        document.getElementById("oldal").style.opacity = "0";;
         //megjelenítjük a pontok oldalt, az adatokkal
         document.getElementById("pontokmenu").style.display = "block";
         //megváltoztatjuk a menüpont nevét
@@ -633,7 +628,6 @@ function pontokmegtekintese(){
     //a menübe betöltjük a pontokat a helyi tárolóból
     document.getElementById("pontokmenuadatok").innerHTML = localStorage.getItem("pontok");
 }
-
 //infó oldal megjelenítése, és eltüntetése
 function info(szam){
     //ha az oldalon kattintunk az "i" jelre akkor
@@ -657,24 +651,24 @@ function info(szam){
         document.getElementById("oldal").style.display = "block";
         //minden felett lévő elemek megjelenítése
         document.getElementById("mindenfelett").style.display = "block";
-        //ha a játéktér létezik, vagyis elvan indítva a játék
-        if(document.getElementById("jatekter") != null){
+        //ha a játéktér létezik, vagyis elvan indítva a játék, és még nincs vége a játéknak
+        if(milyenvegelett = 0 && document.getElementById("jatekter") != null){
             //akkor megjelenik a menüsor
             document.getElementById("menu").style.marginTop = "0";
             //a logo mérete, és poziciója megváltozik
             document.getElementById("logo").style.height = "80px";
-            document.getElementById("logo").style.left = "47%";
+            document.getElementById("logo").style.left = "50%";
         }
     }
 }
-
 //ha a játéknak végevan, de a játékos megszeretné nézni a játéktáblát mégegyszer
 function megtekintes(){
-    //akkor az oldalről kitöröljük a homályosítást
-    document.getElementById("oldal").classList.remove("blur");
+    //akkor az oldalt megjelenítjük
+    document.getElementById("oldal").style.opacity = "1";
     //eltüntetjük a végeoldalt
     document.getElementById("vegeoldal").innerHTML = "";
     document.getElementById("vegeoldal").style.display = "none";
+    document.getElementById("logo").style.height = "80px";
     //ha a játékos nem feladta a játékot, hanem nincs több lehetősége lépni
     if(milyenvegelett == "1"){
     document.getElementById("menupontok").innerHTML += 
@@ -683,7 +677,6 @@ function megtekintes(){
     </li>`
     }
 }
-
 //h a játékos lementette a pontjait a feladás után, akkor nem folytathatja a játékot
 function nemfolytathatja(){
     document.getElementById("megtekintesvagyvisszateres").remove();

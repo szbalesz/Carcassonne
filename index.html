@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" data-bs-theme="">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,7 +33,7 @@
       </nav>
     <div id="oldal">
 <!-- Kezdés oldal -->
-    <div class="kezdes">
+    <div class="bg-body kezdes">
         <div class="input-group mb-3">
             <input type="text" class="form-control" id="jatekosnev" onchange="jatekosnevvaltas()" placeholder="Adj meg egy játékosnevet">
         </div>
@@ -59,7 +59,7 @@
 <!-- Az info oldal a játékszabályokkal -->
     <div id="info" style="display:none">
 <!-- Vissza a játékba gomb -->
-        <button onclick="info(2)" id="fooldal"><h2>&#x2196; Vissza a játékba</h2></button>
+        <button onclick="info(2)" class="btn btn-primary" id="fooldal"><h2>&#x2196; Vissza a játékba</h2></button>
         <div class="row col-12 sor">
             <div class="kartya col-lg-3">
                 <h1>Játékszabály</h1>
