@@ -113,7 +113,8 @@ function vege(szam){
     //megjelenítjük a vége oldalt
     document.getElementById("vegeoldal").style.display = "block";
     //a játék oldalt eltüntetjük
-    document.getElementById("oldal").style.opacity = "0";;
+    document.getElementById("oldal").style.opacity = "0";
+    document.getElementById("feladasmenupont").style.display = "none";
     var vegeszoveg = "";
     var megtekintesgombszoveg = "";
     var mentesgomb = "";
@@ -123,7 +124,7 @@ function vege(szam){
         megtekintesgombszoveg = "Játéktér megtekintése";
         milyenvegelett = 1;
     }
-    if(szam == 2){
+    else if(szam == 2){
         vegeszoveg = "Feladtad a játékot"
         megtekintesgombszoveg = "Játék folytatása";
         mentesgomb = `<button class="btn btn-primary" onclick="pontokmentese(pont),nemfolytathatja(),this.remove()">Pont mentése</button>`
@@ -677,6 +678,10 @@ function megtekintes(){
     `<li class="nav-item">
         <button class="nav-link" id="vegeoldalmegtekintese" onclick="vege(${milyenvegelett},this.remove())">Vissza</button>
     </li>`
+    }
+    else if(milyenvegelett == "2"){
+        document.getElementById("feladasmenupont").style.display = "block";
+        milyenvegelett = "0";
     }
 }
 //h a játékos lementette a pontjait a feladás után, akkor nem folytathatja a játékot
