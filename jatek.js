@@ -138,7 +138,7 @@ function vege(szam){
             <div class="card-body">
               <h5 class="card-title">${vegeszoveg}</h5>
               <p class="card-text">Játékos: <strong>${jatekosnev}</strong><br>Elért pontszám: <strong>${pont}</strong></p>
-              <a href="./index.html" class="btn btn-primary">Főoldal</a>
+              <a href="" class="btn btn-primary">Főoldal</a>
               <button class="btn btn-primary" onclick="reset()">Újrakezdés</button>
               <br>
               <button class="btn btn-primary" id="megtekintesvagyvisszateres" onclick="megtekintes()">${megtekintesgombszoveg}</button>
