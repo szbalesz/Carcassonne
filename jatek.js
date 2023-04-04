@@ -45,6 +45,7 @@ function reset(){
     lerakott = 0;
     document.getElementById("vegeoldal").style.display = "none";
     document.getElementById("oldal").style.opacity = "1";
+    document.getElementById("feladasmenupont").style.display = "block"
 }
 //tábla üressé tétele
 function urestabla(){
@@ -461,10 +462,10 @@ function elhelyezes(hely){
         if(leRakhatoE(parseInt(i),parseInt(f),document.getElementById(k).getAttribute("fent"),document.getElementById(k).getAttribute("lent"),document.getElementById(k).getAttribute("bal"),document.getElementById(k).getAttribute("jobb"))){
             //ha lerakható, akkor a helyek tömbünkhöz hozzáadjuk az képet az alábbi attribútumokkal
             helyek[i][f] = `<img style="rotate: ${irany}" src="${darabok[melyikkep].kep}" id=${i}-${f}-kep darab=${melyikkep} fent=${document.getElementById(k).getAttribute("fent")} lent=${document.getElementById(k).getAttribute("lent")} bal=${document.getElementById(k).getAttribute("bal")} jobb=${document.getElementById(k).getAttribute("jobb")}>`;
+            //a felhasználó pontot kap a lehelyezésért
+            pontadas(helyek[i][f],parseInt(i),parseInt(f));
             //a kártyát a jobboldali pakliből eltávolítjuk
             document.getElementById(k).remove();
-            //a felhasználó pontot kap a lehelyezésért
-            pont += 5;
             //pontjait megjelenítjük
             document.getElementById("pontszam").innerText = pont;
             //lerakott változót növeljük egyel
@@ -476,6 +477,60 @@ function elhelyezes(hely){
     }
     //aztán frissítjük a táblát
     frissites();
+}
+//pont adása a játékosnak
+function pontadas(darab,i,f){
+    
+    //ha a kártya út
+    if(darab.includes("út")){
+        pont++;
+    }
+    //ha a kártya város
+    if(darab.includes("város")){
+        pont+=2;
+    }
+    //ha a kártya kolostor
+    if(darab.includes("kolostor")){
+        //a bejövő paraméterek alapján megkeressük a lerakási hely körüli kártyákat
+        var feletti = helyek[Math.max(i-1,0)][f];
+        var felettibal = helyek[Math.max(i-1,0)][Math.max(f-1,0)];
+        var felettijobb = helyek[Math.max(i-1,0)][Math.min(f+1,szelesseg-1)];
+        var alatti = helyek[Math.min(i+1,hosszusag-1)][f];
+        var alattibal = helyek[Math.min(i+1,hosszusag-1)][Math.max(f-1,0)];
+        var alattijobb = helyek[Math.min(i+1,hosszusag-1)][Math.min(f+1,szelesseg-1)];
+        var baloldali = helyek[i][Math.max(f-1,0)];
+        var jobboldali = helyek[i][Math.min(f+1,szelesseg-1)];
+        if(!feletti.includes("semmi") && i != 0){
+            pont++;
+        }
+        if(!felettibal.includes("semmi") && i != 0 && f != 0){
+            pont++;
+        }
+        if(!felettijobb.includes("semmi") && i != 0 && f != szelesseg-1){
+            pont++;
+        }
+        if(!alatti.includes("semmi") && i != hosszusag-1){
+            pont++;
+        }
+        if(!alattibal.includes("semmi") && i != hosszusag-1){
+            pont++;
+        }
+        if(!alattijobb.includes("semmi") && i != hosszusag-1){
+            pont++;
+        }
+        if(!baloldali.includes("semmi") && f != 0){
+            pont++;
+        }
+        if(!jobboldali.includes("semmi") && i != hosszusag-1 && f != szelesseg-1){
+            console.log(szelesseg)
+            pont++;
+        }
+
+    }
+    //ha betelt a játéktér
+    if(lerakott == 80){
+        pont+=10;
+    }
 }
 //pontokmentése, helyi tárolóba
 var pontok;
