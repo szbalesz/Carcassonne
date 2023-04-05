@@ -515,14 +515,13 @@ function pontadas(darab,i,f){
         if(!alattibal.includes("semmi") && i != hosszusag-1){
             pont++;
         }
-        if(!alattijobb.includes("semmi") && i != hosszusag-1){
+        if(!alattijobb.includes("semmi") && i != hosszusag-1 && f != szelesseg-1){
             pont++;
         }
         if(!baloldali.includes("semmi") && f != 0){
             pont++;
         }
-        if(!jobboldali.includes("semmi") && i != hosszusag-1 && f != szelesseg-1){
-            console.log(szelesseg)
+        if(!jobboldali.includes("semmi") && f != szelesseg-1){
             pont++;
         }
 
@@ -623,7 +622,7 @@ function pontokmegtekintese(){
         //eltüntetjük a pontok oldalt
         document.getElementById("pontokmenu").style.display = "none";
         //megváltoztatjuk a menüpont nevét
-        document.getElementById("pontokmegtekintese").innerText = "Pontok megtekintése";
+        document.getElementById("pontokmegtekintese").innerText = "Mentett pontok megtekintése";
         //megváltoztatjuk a háttérszínét 
         document.getElementById("pontokmegtekintese").style.backgroundColor = "white";
     }//ha még nincs megjelenítve akkor megjelenítjük
