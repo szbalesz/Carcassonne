@@ -301,8 +301,11 @@ body::-webkit-scrollbar
      }
     #jatekter{
         scale: 0.5;
-        top: -15%;
-        left: -40%;
+        top: -14%;
+        left: -48%;
+     }
+     #pont{
+        top: 59%;
      }
      #darabokhelye{
         scale: 0.85;
